@@ -4,7 +4,7 @@
 #include "Vect.hpp"
 
 
-class Camera : public Vect
+class Camera
 {
 public:
     Camera (const int width=1280, const int height=720);
@@ -16,6 +16,9 @@ public:
     inline int height () const { return m_height; }
 
 private:
+    Vect m_pos; // Position of the focus point
+    Vect m_dir;
+
     int m_width;
     int m_height;
 };
