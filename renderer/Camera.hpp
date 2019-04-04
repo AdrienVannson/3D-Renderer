@@ -21,13 +21,13 @@ public:
     Color color (const int x, const int y) const;
 
 private:
+    Scene *m_scene;
+
     Vect m_pos; // Position of the focus point
     Vect m_dir;
 
     int m_width;
     int m_height;
-
-    Scene *m_scene;
 };
 
 #endif // CAMERA_HPP

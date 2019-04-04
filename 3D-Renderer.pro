@@ -30,14 +30,20 @@ SOURCES += \
     renderer/Scene.cpp \
     renderer/Camera.cpp \
     renderer/Vect.cpp \
-    renderer/Color.cpp
+    renderer/Color.cpp \
+    renderer/objects/Object.cpp \
+    renderer/Ray.cpp \
+    renderer/objects/Sphere.cpp
 
 HEADERS += \
         Mainwindow.hpp \
     renderer/Scene.hpp \
     renderer/Camera.hpp \
     renderer/Vect.hpp \
-    renderer/Color.hpp
+    renderer/Color.hpp \
+    renderer/objects/Object.hpp \
+    renderer/Ray.hpp \
+    renderer/objects/Sphere.hpp
 
 FORMS +=
 

@@ -1,8 +1,11 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+#include <vector>
+
 #include "Camera.hpp"
 #include "Vect.hpp"
+#include "objects/Object.hpp"
 
 
 class Scene
@@ -13,9 +16,13 @@ public:
 
     inline Camera* camera () { return m_camera; }
 
+    inline void addObject (Object *object) { m_objects.push_back(object); }
+
 
 private:
     Camera *m_camera;
+
+    std::vector<Object*> m_objects;
 };
 
 #endif // SCENE_HPP

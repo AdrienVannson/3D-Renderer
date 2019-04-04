@@ -6,6 +6,7 @@
 #include <QLabel>
 
 #include "renderer/Scene.hpp"
+#include "renderer/objects/Sphere.hpp"
 
 
 class MainWindow : public QMainWindow

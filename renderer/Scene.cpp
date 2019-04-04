@@ -8,5 +8,8 @@ Scene::Scene ()
 Scene::~Scene ()
 {
     delete m_camera;
-    m_camera = 0;
+
+    for (Object *object : m_objects) {
+        delete object;
+    }
 }
