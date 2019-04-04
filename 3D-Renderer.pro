@@ -29,13 +29,15 @@ SOURCES += \
         Mainwindow.cpp \
     renderer/Scene.cpp \
     renderer/Camera.cpp \
-    renderer/Vect.cpp
+    renderer/Vect.cpp \
+    renderer/Color.cpp
 
 HEADERS += \
         Mainwindow.hpp \
     renderer/Scene.hpp \
     renderer/Camera.hpp \
-    renderer/Vect.hpp
+    renderer/Vect.hpp \
+    renderer/Color.hpp
 
 FORMS +=
 
