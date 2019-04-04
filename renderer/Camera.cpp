@@ -8,3 +8,8 @@ Camera::Camera (Scene *scene, const int width, const int height) :
 {
 
 }
+
+Color Camera::color (const int x, const int y) const
+{
+    return Color (0, 0, 255);
+}

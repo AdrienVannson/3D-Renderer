@@ -11,9 +11,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for (int x=0; x<m_scene->camera()->width(); x++) {
         for (int y=0; y<m_scene->camera()->height(); y++) {
-            image.setPixel(x, y, 0xFF0000);
+            image.setPixel(x, y, m_scene->camera()->color(x, y).hex());
         }
     }
+
+    // Disable resizing
+    setFixedSize(m_scene->camera()->width(), m_scene->camera()->height());
 
     QLabel *label = new QLabel;
     label->setPixmap(QPixmap::fromImage(image));

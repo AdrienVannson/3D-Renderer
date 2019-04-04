@@ -2,6 +2,7 @@
 #define CAMERA_HPP
 
 #include "Vect.hpp"
+#include "Color.hpp"
 
 class Scene;
 
@@ -16,6 +17,8 @@ public:
 
     inline int& height () { return m_height; }
     inline int height () const { return m_height; }
+
+    Color color (const int x, const int y) const;
 
 private:
     Vect m_pos; // Position of the focus point

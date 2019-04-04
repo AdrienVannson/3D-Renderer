@@ -17,6 +17,8 @@ public:
     inline int& blue () { return m_blue; }
     inline int blue () const { return m_blue; }
 
+    int hex () const;
+
 
 private:
     int m_red, m_green, m_blue;
