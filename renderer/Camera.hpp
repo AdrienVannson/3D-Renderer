@@ -3,11 +3,13 @@
 
 #include "Vect.hpp"
 
+class Scene;
+
 
 class Camera
 {
 public:
-    Camera (const int width=1280, const int height=720);
+    Camera (Scene *scene, const int width=1280, const int height=720);
 
     inline int& width () { return m_width; }
     inline int width () const { return m_width; }
@@ -21,6 +23,8 @@ private:
 
     int m_width;
     int m_height;
+
+    Scene *m_scene;
 };
 
 #endif // CAMERA_HPP

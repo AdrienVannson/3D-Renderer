@@ -9,6 +9,7 @@ class Scene
 {
 public:
     Scene ();
+    ~Scene ();
 
     inline Camera* camera () { return m_camera; }
 
