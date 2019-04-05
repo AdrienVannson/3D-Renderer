@@ -10,7 +10,7 @@ class Scene;
 class Camera
 {
 public:
-    Camera (Scene *scene, const int width=1280, const int height=720);
+    Camera (Scene *scene, const int width=320, const int height=180);
 
     inline int width () const { return m_width; }
     inline void setWidth (const int width) { m_width = width; }

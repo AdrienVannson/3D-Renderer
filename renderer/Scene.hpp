@@ -16,6 +16,7 @@ public:
 
     inline Camera* camera () { return m_camera; }
 
+    inline const std::vector<Object*>& objects () const { return m_objects; }
     inline void addObject (Object *object) { m_objects.push_back(object); }
 
 

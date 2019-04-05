@@ -1,6 +1,8 @@
 #include "Camera.hpp"
 #include "Scene.hpp"
 
+using namespace std;
+
 Camera::Camera (Scene *scene, const int width, const int height) :
     m_scene (scene),
     m_width (width),
@@ -11,14 +13,22 @@ Camera::Camera (Scene *scene, const int width, const int height) :
 
 Color Camera::color (const int x, const int y) const
 {
-    Vect i (m_dir.x(), -m_dir.y());
+    Vect i (m_dir.y(), -m_dir.x());
     i.normalize();
 
     Vect j (0, 0, 0); // TODO
 
-    const Vect dir = m_dir + (x - 0.5*m_width) * i + (y - 0.5*m_height) * j;
+    const Vect dir = m_dir
+                   + ((double)x/min(m_width, m_height) - 0.5 * m_width / min(m_width, m_height)) * i
+                   + ((double)y/min(m_width, m_height) - 0.5 * m_height / min(m_width, m_height)) * j;
 
     Ray ray (m_pos, dir);
 
-    return Color (0, 0, 255);
+    for (Object *object : m_scene->objects()) {
+        if (!isinf(object->collisionDate(ray))) {
+            return Color (255, 0, 0);
+        }
+    }
+
+    return Color (100, 100, 100);
 }

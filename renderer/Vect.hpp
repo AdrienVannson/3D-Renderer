@@ -32,4 +32,6 @@ inline Vect operator- (const Vect &a, const Vect &b) { return Vect(a.x()-b.x(), 
 inline Vect operator* (const double k, const Vect &v) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
 inline Vect operator* (const Vect &v, const double k) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
 
+inline double dist (const Vect &a, const Vect &b) { return Vect(a-b).norm(); }
+
 #endif // VECT_HPP
