@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_scene->addObject(new Sphere (Vect(0, 0, 0), 1));
 
+    m_scene->camera()->pos() = Vect (3, 0, 0);
+    m_scene->camera()->dir() = Vect (-1, 0, 0);
+
     // Create UI
     QImage image = QImage (m_scene->camera()->width(), m_scene->camera()->height(), QImage::Format_RGB32);
 

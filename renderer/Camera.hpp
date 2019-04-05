@@ -18,6 +18,12 @@ public:
     inline int& height () { return m_height; }
     inline int height () const { return m_height; }
 
+    inline Vect& pos () { return m_pos; }
+    inline Vect pos () const { return m_pos; }
+
+    inline Vect& dir () { return m_dir; }
+    inline Vect dir () const { return m_dir; }
+
     Color color (const int x, const int y) const;
 
 private:
