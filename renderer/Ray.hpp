@@ -9,11 +9,11 @@ class Ray
 public:
     Ray (const Vect &pos=Vect(), const Vect &dir=Vect());
 
-    inline Vect& pos () { return m_pos; }
     inline Vect pos () const { return m_pos; }
+    inline void setPos (const Vect pos) { m_pos = pos; }
 
-    inline Vect& dir () { return m_dir; }
     inline Vect dir () const { return m_dir; }
+    inline void setDir (const Vect dir) { m_dir = dir; }
 
 
 private:
