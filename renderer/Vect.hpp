@@ -1,6 +1,8 @@
 #ifndef VECT_HPP
 #define VECT_HPP
 
+#include <cmath>
+
 
 class Vect
 {
@@ -17,8 +19,17 @@ public:
     inline double z () const { return m_z; }
     inline void setZ (const double z) { m_z = z; }
 
+    double norm () const;
+    void normalize ();
+
 protected:
     double m_x, m_y, m_z;
 };
+
+inline Vect operator+ (const Vect &a, const Vect &b) { return Vect(a.x()+b.x(), a.y()+b.y(), a.z()+b.z()); }
+inline Vect operator- (const Vect &a, const Vect &b) { return Vect(a.x()-b.x(), a.y()-b.y(), a.z()-b.z()); }
+
+inline Vect operator* (const double k, const Vect &v) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
+inline Vect operator* (const Vect &v, const double k) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
 
 #endif // VECT_HPP
