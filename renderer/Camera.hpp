@@ -12,17 +12,17 @@ class Camera
 public:
     Camera (Scene *scene, const int width=1280, const int height=720);
 
-    inline int& width () { return m_width; }
     inline int width () const { return m_width; }
+    inline void setWidth (const int width) { m_width = width; }
 
-    inline int& height () { return m_height; }
     inline int height () const { return m_height; }
+    inline void setHeight (const int height) { m_height = height; }
 
-    inline Vect& pos () { return m_pos; }
     inline Vect pos () const { return m_pos; }
+    inline void setPos (const Vect pos) { m_pos = pos; }
 
-    inline Vect& dir () { return m_dir; }
     inline Vect dir () const { return m_dir; }
+    inline void setDir (const Vect dir) { m_dir = dir; }
 
     Color color (const int x, const int y) const;
 
