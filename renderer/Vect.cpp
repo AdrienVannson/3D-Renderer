@@ -19,3 +19,36 @@ void Vect::normalize ()
     m_y /= currentNorm;
     m_z /= currentNorm;
 }
+
+Vect Vect::operator- () const
+{
+    return Vect (-m_x, -m_y, -m_z);
+}
+
+void Vect::operator*= (const double k)
+{
+    m_x *= k;
+    m_y *= k;
+    m_z *= k;
+}
+
+void Vect::operator/= (const double k)
+{
+    m_x /= k;
+    m_y /= k;
+    m_z /= k;
+}
+
+void Vect::operator+= (const Vect &v)
+{
+    m_x += v.m_x;
+    m_y += v.m_y;
+    m_z += v.m_z;
+}
+
+void Vect::operator-= (const Vect &v)
+{
+    m_x -= v.m_x;
+    m_y -= v.m_y;
+    m_z -= v.m_z;
+}

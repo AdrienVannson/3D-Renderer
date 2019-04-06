@@ -22,12 +22,21 @@ public:
     double norm () const;
     void normalize ();
 
+    Vect operator- () const;
+
+    void operator*= (const double k);
+    void operator/= (const double k);
+
+    void operator+= (const Vect &v);
+    void operator-= (const Vect &v);
+
 protected:
     double m_x, m_y, m_z;
 };
 
 inline Vect operator+ (const Vect &a, const Vect &b) { return Vect(a.x()+b.x(), a.y()+b.y(), a.z()+b.z()); }
 inline Vect operator- (const Vect &a, const Vect &b) { return Vect(a.x()-b.x(), a.y()-b.y(), a.z()-b.z()); }
+inline double operator* (const Vect &a, const Vect &b) { return a.x()*b.x() + a.y()*b.y() + a.z()*b.z(); } // Dot product
 
 inline Vect operator* (const double k, const Vect &v) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
 inline Vect operator* (const Vect &v, const double k) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
