@@ -18,15 +18,28 @@ Color Camera::color (const int x, const int y) const
 
     Vect j (0, 0, 1); // TODO
 
-    const Vect dir = m_dir
-                   + ((double)x/min(m_width, m_height) - 0.5 * m_width / min(m_width, m_height)) * i
-                   + ((double)y/min(m_width, m_height) - 0.5 * m_height / min(m_width, m_height)) * j;
+    Vect dir = m_dir
+               + ((double)x/min(m_width, m_height) - 0.5 * m_width / min(m_width, m_height)) * i
+               + ((double)y/min(m_width, m_height) - 0.5 * m_height / min(m_width, m_height)) * j;
+    dir.normalize();
 
     Ray ray (m_pos, dir);
 
     for (Object *object : m_scene->objects()) {
-        if (!isinf(object->collisionDate(ray))) {
-            return Color (255, 0, 0);
+        const double collisionDate = object->collisionDate(ray);
+
+        if (!isinf(collisionDate)) {
+            // TODO: no dynamic cast
+            const Vect intersection = m_pos + collisionDate*dir;
+            Vect normal = intersection - dynamic_cast<Sphere*>(object)->center();
+            normal.normalize();
+
+            // TODO: use all lights
+            Vect toLight = m_scene->lights()[0]->pos() - dynamic_cast<Sphere*>(object)->center();
+            toLight.normalize();
+
+            const int red = max(-255.0 * normal * toLight, 0.0);
+            return Color (red, 0, intersection.z()>0 ? 255 : 0);
         }
     }
 

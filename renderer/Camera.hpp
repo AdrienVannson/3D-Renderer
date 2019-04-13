@@ -1,8 +1,11 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
+#include <QDebug>
+
 #include "Vect.hpp"
 #include "Color.hpp"
+#include "objects/Sphere.hpp" // TODEL
 
 class Scene;
 
