@@ -13,11 +13,11 @@ public:
     Sphere (const Vect &center=Vect(), const double radius=1);
     virtual ~Sphere ();
 
-    inline Vect& center () { return m_center; }
     inline Vect center () const { return m_center; }
+    inline void setCenter (const Vect &center) { m_center = center; }
 
-    inline double& radius () { return m_radius; }
     inline double radius () const { return m_radius; }
+    inline void setRadius (const double radius) { m_radius = radius; }
 
     inline Material material () const { return m_material; }
     inline void setMaterial (const Material &material) { m_material = material; }
