@@ -16,7 +16,7 @@ Color Camera::color (const int x, const int y) const
     Vect i (m_dir.y(), -m_dir.x());
     i.normalize();
 
-    Vect j (0, 0, 0); // TODO
+    Vect j (0, 0, 1); // TODO
 
     const Vect dir = m_dir
                    + ((double)x/min(m_width, m_height) - 0.5 * m_width / min(m_width, m_height)) * i
