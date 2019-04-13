@@ -34,7 +34,8 @@ SOURCES += \
     renderer/objects/Object.cpp \
     renderer/Ray.cpp \
     renderer/objects/Sphere.cpp \
-    renderer/Material.cpp
+    renderer/Material.cpp \
+    renderer/Light.cpp
 
 HEADERS += \
         Mainwindow.hpp \
@@ -45,7 +46,8 @@ HEADERS += \
     renderer/objects/Object.hpp \
     renderer/Ray.hpp \
     renderer/objects/Sphere.hpp \
-    renderer/Material.hpp
+    renderer/Material.hpp \
+    renderer/Light.hpp
 
 FORMS +=
 
