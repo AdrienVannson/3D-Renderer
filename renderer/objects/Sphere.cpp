@@ -12,11 +12,11 @@ double Sphere::collisionDate (const Ray &ray)
 {
     Vect pos = ray.pos();
 
-    for (int i=0; i<100; i++) {
+    for (int i=0; i<500; i++) {
         if (dist(pos, m_center) <= m_radius) {
-            return i*10;
+            return i*100;
         }
-        pos = pos + 0.1*ray.dir();
+        pos = pos + 0.01*ray.dir();
     }
 
     return INFINITY;
