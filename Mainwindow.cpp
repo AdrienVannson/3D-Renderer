@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_scene->addObject(new Sphere (Vect(0, 0, 0), 1));
 
+    m_scene->addLight(new Light(Vect(1, -1, 1)));
+
     m_scene->camera()->setPos( Vect (3, 0, 0) );
     m_scene->camera()->setDir( Vect (-1, 0, 0) );
 

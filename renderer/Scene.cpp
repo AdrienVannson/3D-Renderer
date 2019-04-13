@@ -12,4 +12,8 @@ Scene::~Scene ()
     for (Object *object : m_objects) {
         delete object;
     }
+
+    for (Light *light : m_lights) {
+        delete light;
+    }
 }
