@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Create scene
     m_scene = new Scene ();
+    /*m_scene->camera()->setWidth(1920);
+    m_scene->camera()->setHeight(1080);*/
 
     m_scene->addObject(new Sphere (Vect(0, 0, 0), 1));
 
