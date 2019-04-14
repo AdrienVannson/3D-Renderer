@@ -11,14 +11,14 @@ Sphere::~Sphere ()
 
 double Sphere::collisionDate (const Ray &ray)
 {
-    Vect pos = ray.pos();
+    const Vect AB = m_center - ray.pos();
+    const Vect v = ray.dir();
 
-    for (int i=0; i<500; i++) {
-        if (dist(pos, m_center) <= m_radius) {
-            return i/100.0;
-        }
-        pos = pos + 0.01*ray.dir();
+    const double delta = (AB*v) * (AB*v) + (m_radius*m_radius - AB*AB) * v*v;
+
+    if (delta < 0) {
+        return INFINITY;
     }
 
-    return INFINITY;
+    return (AB*v - sqrt(delta)) / (v*v);
 }
