@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for (int x=0; x<m_scene->camera()->width(); x++) {
         for (int y=0; y<m_scene->camera()->height(); y++) {
-            image.setPixel(x, y, m_scene->camera()->color(x, y).hex());
+            image.setPixel(x, m_scene->camera()->height()-y-1, m_scene->camera()->color(x, y).hex());
         }
     }
 
