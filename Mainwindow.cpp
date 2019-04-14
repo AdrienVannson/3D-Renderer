@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(1080);*/
 
     m_scene->addObject(new Sphere (Vect(0, 0, 0), 1));
+    m_scene->addObject(new Sphere (Vect(-2, -2, 1), 1)); // Left
+    m_scene->addObject(new Sphere (Vect(-2, 2, 1), 1)); // Right
 
     m_scene->addLight(new Light(Vect(1, 1, 1)));
 
