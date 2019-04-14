@@ -38,8 +38,15 @@ Color Camera::color (const int x, const int y) const
             Vect toLight = m_scene->lights()[0]->pos() - dynamic_cast<Sphere*>(object)->center();
             toLight.normalize();
 
-            const int red = max(255.0 * normal * toLight, 0.0);
-            return Color (red, 0, 0);
+            const double dotProduct = normal * toLight;
+
+            if (dotProduct < 0) {
+                return Color(0, 0, 0);
+            }
+
+            return Color (dotProduct * dynamic_cast<Sphere*>(object)->material().color().red(),
+                          dotProduct * dynamic_cast<Sphere*>(object)->material().color().green(),
+                          dotProduct * dynamic_cast<Sphere*>(object)->material().color().blue());
         }
     }
 

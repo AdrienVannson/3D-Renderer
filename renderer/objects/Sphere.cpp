@@ -1,8 +1,9 @@
 #include "Sphere.hpp"
 
-Sphere::Sphere (const Vect &center, const double radius) :
+Sphere::Sphere (const Vect &center, const double radius, const Material &material) :
     m_center (center),
-    m_radius (radius)
+    m_radius (radius),
+    m_material (material)
 {}
 
 Sphere::~Sphere ()

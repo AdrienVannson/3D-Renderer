@@ -7,7 +7,7 @@
 class Material
 {
 public:
-    Material ();
+    Material (const Color &color=Color());
 
     inline Color color () const { return m_color; }
     inline void setColor (const Color &color) { m_color = color; }

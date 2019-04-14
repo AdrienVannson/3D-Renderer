@@ -1,4 +1,5 @@
 #include "Material.hpp"
 
-Material::Material ()
+Material::Material (const Color &color) :
+    m_color (color)
 {}
