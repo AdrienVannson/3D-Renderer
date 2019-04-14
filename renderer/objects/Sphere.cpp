@@ -14,7 +14,7 @@ double Sphere::collisionDate (const Ray &ray)
 
     for (int i=0; i<500; i++) {
         if (dist(pos, m_center) <= m_radius) {
-            return i*100;
+            return i/100.0;
         }
         pos = pos + 0.01*ray.dir();
     }

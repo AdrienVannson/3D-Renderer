@@ -38,8 +38,8 @@ Color Camera::color (const int x, const int y) const
             Vect toLight = m_scene->lights()[0]->pos() - dynamic_cast<Sphere*>(object)->center();
             toLight.normalize();
 
-            const int red = max(-255.0 * normal * toLight, 0.0);
-            return Color (red, 0, intersection.z()>0 ? 255 : 0);
+            const int red = max(255.0 * normal * toLight, 0.0);
+            return Color (red, 0, 0);
         }
     }
 
