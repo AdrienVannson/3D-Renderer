@@ -25,30 +25,40 @@ Color Camera::color (const int x, const int y) const
 
     Ray ray (m_pos, dir);
 
-    for (Object *object : m_scene->objects()) {
-        const double collisionDate = object->collisionDate(ray);
 
-        if (!isinf(collisionDate)) {
-            // TODO: no dynamic cast
-            const Vect intersection = m_pos + collisionDate*dir;
-            Vect normal = intersection - dynamic_cast<Sphere*>(object)->center();
-            normal.normalize();
+    Object *object = 0;
+    double minCollisionDate = INFINITY;
 
-            // TODO: use all lights
-            Vect toLight = m_scene->lights()[0]->pos() - dynamic_cast<Sphere*>(object)->center();
-            toLight.normalize();
+    // Select nearest object
+    for (Object *currentObject : m_scene->objects()) {
+        const double collisionDate = currentObject->collisionDate(ray);
 
-            const double dotProduct = normal * toLight;
-
-            if (dotProduct < 0) {
-                return Color(0, 0, 0);
-            }
-
-            return Color (dotProduct * dynamic_cast<Sphere*>(object)->material().color().red(),
-                          dotProduct * dynamic_cast<Sphere*>(object)->material().color().green(),
-                          dotProduct * dynamic_cast<Sphere*>(object)->material().color().blue());
+        if (collisionDate < minCollisionDate) {
+            minCollisionDate = collisionDate;
+            object = currentObject;
         }
     }
 
-    return Color (100, 100, 100);
+    if (isinf(minCollisionDate)) {
+        return Color (80, 80, 80); // Return background color
+    }
+
+    // TODO: no dynamic cast
+    const Vect intersection = m_pos + minCollisionDate*dir;
+    Vect normal = intersection - dynamic_cast<Sphere*>(object)->center();
+    normal.normalize();
+
+    // TODO: use all lights
+    Vect toLight = m_scene->lights()[0]->pos() - dynamic_cast<Sphere*>(object)->center();
+    toLight.normalize();
+
+    const double dotProduct = normal * toLight;
+
+    if (dotProduct < 0) {
+        return Color(0, 0, 0);
+    }
+
+    return Color (dotProduct * dynamic_cast<Sphere*>(object)->material().color().red(),
+                  dotProduct * dynamic_cast<Sphere*>(object)->material().color().green(),
+                  dotProduct * dynamic_cast<Sphere*>(object)->material().color().blue());
 }
