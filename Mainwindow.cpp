@@ -9,13 +9,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(1080);*/
 
     m_scene->addObject(new Sphere (Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
-    m_scene->addObject(new Sphere (Vect(-2, -2, 1), 1, Material(Color(0, 255, 0)))); // Left
-    m_scene->addObject(new Sphere (Vect(-2, 2, 1), 1, Material(Color(0, 0, 255)))); // Right
+    m_scene->addObject(new Sphere (Vect(-3, -2, 0), 1, Material(Color(0, 255, 0)))); // Left
+    m_scene->addObject(new Sphere (Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right
 
     m_scene->addLight(new Light(Vect(1, 1, 1)));
 
-    m_scene->camera()->setPos( Vect (3, 0, 0) );
-    m_scene->camera()->setDir( Vect (-1, 0, 0) );
+    m_scene->camera()->setPos( Vect (10, 0, 0) );
+    m_scene->camera()->setDir( Vect (-3, 0, 0) );
 
     // Create UI
     QImage image = QImage (m_scene->camera()->width(), m_scene->camera()->height(), QImage::Format_RGB32);
