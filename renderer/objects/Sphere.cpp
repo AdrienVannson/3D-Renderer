@@ -20,5 +20,15 @@ double Sphere::collisionDate (const Ray &ray)
         return INFINITY;
     }
 
-    return (AB*v - sqrt(delta)) / (v*v);
+    const double root1 = (AB*v - sqrt(delta)) / (v*v);
+    if (root1 >= 0) {
+        return root1;
+    }
+
+    const double root2 = (AB*v + sqrt(delta)) / (v*v);
+    if (root2 >= 0) {
+        return root2;
+    }
+
+    return INFINITY;
 }
