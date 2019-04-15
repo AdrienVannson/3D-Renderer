@@ -2,6 +2,7 @@
 #define SCENE_HPP
 
 #include <vector>
+#include <cmath>
 
 #include "Camera.hpp"
 #include "Vect.hpp"
@@ -23,6 +24,7 @@ public:
     inline const std::vector<Light*>& lights () const { return m_lights; }
     inline void addLight (Light *light) { m_lights.push_back(light); }
 
+    Color color (const Ray &ray) const;
 
 private:
     Camera *m_camera;

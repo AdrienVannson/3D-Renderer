@@ -23,25 +23,5 @@ Color Camera::color (const int x, const int y) const
                + ((double)y/min(m_width, m_height) - 0.5 * m_height / min(m_width, m_height)) * j;
     dir.normalize();
 
-    Ray ray (m_pos, dir);
-
-
-    Object *object = 0;
-    double minCollisionDate = INFINITY;
-
-    // Select nearest object
-    for (Object *currentObject : m_scene->objects()) {
-        const double collisionDate = currentObject->collisionDate(ray);
-
-        if (collisionDate < minCollisionDate) {
-            minCollisionDate = collisionDate;
-            object = currentObject;
-        }
-    }
-
-    if (isinf(minCollisionDate)) {
-        return Color (80, 80, 80); // Return background color
-    }
-
-    return object->color(ray);
+    return m_scene->color(Ray(m_pos, dir));
 }
