@@ -1,6 +1,7 @@
 #include "Object.hpp"
 
-Object::Object ()
+Object::Object (Scene *scene) :
+    m_scene (scene)
 {}
 
 Object::~Object ()

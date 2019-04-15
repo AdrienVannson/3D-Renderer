@@ -1,6 +1,9 @@
 #include "Sphere.hpp"
+#include "../Scene.hpp"
 
-Sphere::Sphere (const Vect &center, const double radius, const Material &material) :
+Sphere::Sphere (Scene *scene, const Vect &center, const double radius, const Material &material) :
+    Object (scene),
+
     m_center (center),
     m_radius (radius),
     m_material (material)
@@ -31,4 +34,25 @@ double Sphere::collisionDate (const Ray &ray)
     }
 
     return INFINITY;
+}
+
+Color Sphere::color (const Ray &ray)
+{
+    const Vect intersection = ray.pos() + collisionDate(ray) * ray.dir();
+    Vect normal = intersection - m_center;
+    normal.normalize();
+
+    // TODO: use all lights
+    Vect toLight = m_scene->lights()[0]->pos() - m_center;
+    toLight.normalize();
+
+    const double dotProduct = normal * toLight;
+
+    if (dotProduct < 0) {
+        return Color(0, 0, 0);
+    }
+
+    return Color (dotProduct * m_material.color().red(),
+                  dotProduct * m_material.color().green(),
+                  dotProduct * m_material.color().blue());
 }

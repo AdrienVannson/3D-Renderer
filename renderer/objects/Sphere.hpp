@@ -10,7 +10,7 @@
 class Sphere : public Object
 {
 public:
-    Sphere (const Vect &center=Vect(), const double radius=1, const Material &material=Material());
+    Sphere (Scene *scene, const Vect &center=Vect(), const double radius=1, const Material &material=Material());
     virtual ~Sphere ();
 
     inline Vect center () const { return m_center; }
@@ -23,6 +23,7 @@ public:
     inline void setMaterial (const Material &material) { m_material = material; }
 
     virtual double collisionDate (const Ray &ray);
+    virtual Color color (const Ray &ray);
 
 private:
     Vect m_center;

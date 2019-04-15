@@ -43,22 +43,5 @@ Color Camera::color (const int x, const int y) const
         return Color (80, 80, 80); // Return background color
     }
 
-    // TODO: no dynamic cast
-    const Vect intersection = m_pos + minCollisionDate*dir;
-    Vect normal = intersection - dynamic_cast<Sphere*>(object)->center();
-    normal.normalize();
-
-    // TODO: use all lights
-    Vect toLight = m_scene->lights()[0]->pos() - dynamic_cast<Sphere*>(object)->center();
-    toLight.normalize();
-
-    const double dotProduct = normal * toLight;
-
-    if (dotProduct < 0) {
-        return Color(0, 0, 0);
-    }
-
-    return Color (dotProduct * dynamic_cast<Sphere*>(object)->material().color().red(),
-                  dotProduct * dynamic_cast<Sphere*>(object)->material().color().green(),
-                  dotProduct * dynamic_cast<Sphere*>(object)->material().color().blue());
+    return object->color(ray);
 }
