@@ -21,4 +21,3 @@ Color Triangle::color (const Ray &ray)
 {
     return Color ();
 }
-
