@@ -43,7 +43,7 @@ Color Sphere::color (const Ray &ray)
     normal.normalize();
 
     // TODO: use all lights
-    Vect toLight = m_scene->lights()[0]->pos() - m_center;
+    Vect toLight = m_scene->lights()[0]->pos() - intersection;
     toLight.normalize();
 
     const double dotProduct = normal * toLight;
