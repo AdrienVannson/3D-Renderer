@@ -12,21 +12,28 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Create scene
     m_scene = new Scene ();
-    /*m_scene->camera()->setWidth(1920);
-    m_scene->camera()->setHeight(1080);*/
+#if 0
+    m_scene->camera()->setWidth(1920);
+    m_scene->camera()->setHeight(1080);
+#endif
 
-    /*m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
+#if 0
+    m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
     m_scene->addObject(new Sphere (m_scene, Vect(-3, -2, 0), 1, Material(Color(0, 255, 0)))); // Left
-    m_scene->addObject(new Sphere (m_scene, Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right*/
-
+    m_scene->addObject(new Sphere (m_scene, Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right
+#else
     load("../monkey.obj");
-
-    //m_scene->addObject(new Triangle (m_scene, Vect(0, 0, 0), Vect(0, 1, 0), Vect(0, 0, 1), Material(Color(255, 0, 0))));
+#endif
 
     m_scene->addLight(new Light(Vect(3, 2, 2)));
 
+#if 0
     m_scene->camera()->setPos( Vect (10, 0, 0) );
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
+#else
+    m_scene->camera()->setPos( Vect (10, 10, 5) );
+    m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
+#endif
 
     // Create UI
     QImage image = QImage (m_scene->camera()->width(), m_scene->camera()->height(), QImage::Format_RGB32);
