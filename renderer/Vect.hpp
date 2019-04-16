@@ -36,7 +36,18 @@ protected:
 
 inline Vect operator+ (const Vect &a, const Vect &b) { return Vect(a.x()+b.x(), a.y()+b.y(), a.z()+b.z()); }
 inline Vect operator- (const Vect &a, const Vect &b) { return Vect(a.x()-b.x(), a.y()-b.y(), a.z()-b.z()); }
-inline double operator* (const Vect &a, const Vect &b) { return a.x()*b.x() + a.y()*b.y() + a.z()*b.z(); } // Dot product
+
+inline double operator* (const Vect &a, const Vect &b) // Dot product
+{
+    return a.x()*b.x() + a.y()*b.y() + a.z()*b.z();
+}
+
+inline Vect operator^ (const Vect &a, const Vect &b) // Cross product
+{
+    return Vect (a.y() * b.z() - b.y() * a.z(),
+                 a.z() * b.x() - b.z() * a.x(),
+                 a.x() * b.y() - b.x() * a.y());
+}
 
 inline Vect operator* (const double k, const Vect &v) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
 inline Vect operator* (const Vect &v, const double k) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
