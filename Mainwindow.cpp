@@ -13,25 +13,39 @@ MainWindow::MainWindow(QWidget *parent) :
     // Create scene
     m_scene = new Scene ();
 #if 0
-    m_scene->camera()->setWidth(1920);
-    m_scene->camera()->setHeight(1080);
+    m_scene->camera()->setWidth(1280);
+    m_scene->camera()->setHeight(720);
 #endif
 
+// Spheres
 #if 0
     m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
     m_scene->addObject(new Sphere (m_scene, Vect(-3, -2, 0), 1, Material(Color(0, 255, 0)))); // Left
     m_scene->addObject(new Sphere (m_scene, Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right
-#else
-    load("../monkey.obj");
-#endif
 
     m_scene->addLight(new Light(Vect(3, 2, 2)));
 
-#if 0
     m_scene->camera()->setPos( Vect (10, 0, 0) );
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
-#else
-    m_scene->camera()->setPos( Vect (10, 10, 5) );
+#endif
+
+// Teapot
+#if 0
+    load("../teapot.obj");
+
+    m_scene->addLight(new Light(Vect(3, 2, 4)));
+
+    m_scene->camera()->setPos( Vect (12, 12, 7.4) );
+    m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
+#endif
+
+// Torus knot
+#if 1
+    load("../knot.obj");
+
+    m_scene->addLight(new Light(Vect(3, 2, 4)));
+
+    m_scene->camera()->setPos( Vect (14, 14, 6.8) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 #endif
 
