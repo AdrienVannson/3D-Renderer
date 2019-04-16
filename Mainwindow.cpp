@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //m_scene->addObject(new Triangle (m_scene, Vect(0, 0, 0), Vect(0, 1, 0), Vect(0, 0, 1), Material(Color(255, 0, 0))));
 
-    m_scene->addLight(new Light(Vect(2, 2, 2)));
+    m_scene->addLight(new Light(Vect(3, 2, 2)));
 
     m_scene->camera()->setPos( Vect (10, 0, 0) );
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
@@ -54,7 +54,7 @@ MainWindow::~MainWindow()
 void MainWindow::load (QString filename)
 {
     Group *group = new Group (m_scene);
-    Material material (Color(30, 110, 200));
+    Material material (Color(255, 0, 0));
 
     fstream file (filename.toStdString().c_str(), fstream::in);
 
