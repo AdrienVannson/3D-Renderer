@@ -3,7 +3,8 @@
 using namespace std;
 
 
-Scene::Scene ()
+Scene::Scene () :
+    m_backgroundColor (Color(80, 80, 80))
 {
     m_camera = new Camera (this);
 }
@@ -48,7 +49,7 @@ Color Scene::color (const Ray &ray) const
     }
 
     if (isinf(minCollisionDate)) {
-        return Color (80, 80, 80); // Return background color
+        return m_backgroundColor;
     }
 
     return object->color(ray);
