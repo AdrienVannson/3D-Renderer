@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    image.save("output.png");
+    image.save("output.png", Q_NULLPTR, 100);
 
     // Disable resizing
     setFixedSize(m_scene->camera()->width(), m_scene->camera()->height());
