@@ -19,7 +19,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void load (QString filename);
+    void load (QString filename, const std::vector<Material> &materials=std::vector<Material>());
 
 private:
     Scene *m_scene;

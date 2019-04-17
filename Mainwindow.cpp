@@ -70,45 +70,59 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::load (QString filename)
+void MainWindow::load (QString filename, const std::vector<Material> &materials)
 {
     Group *group = new Group (m_scene);
-    Material material (Color(255, 0, 0));
+
+    int iObject = -1;
+    vector<Vect> vertice;
+    Material material;
 
     fstream file (filename.toStdString().c_str(), fstream::in);
-
-    vector<Vect> vertice;
-
     string line;
+
     while (getline(file, line)) {
         stringstream stream;
         stream << line;
 
-        if (line[0] == 'v' && line[1] == ' ') {
-            char c;
-            stream >> c;
+        if (line[1] == ' ') {
+            if (line[0] == 'v') {
+                char c;
+                stream >> c;
 
-            double x, y, z;
-            stream >> x >> y >> z;
+                double x, y, z;
+                stream >> x >> y >> z;
 
-            vertice.push_back(Vect(x, y, z));
-        }
-        else if (line[0] == 'f') {
-            char c;
-            int i;
-            stream >> c;
+                vertice.push_back(Vect(x, y, z));
+            }
+            else if (line[0] == 'f') {
+                char c;
+                int i;
+                stream >> c;
 
-            int indexes[3];
+                int indexes[3];
 
-            stream >> indexes[0];
-            stream >> c >> c >> i;
-            stream >> indexes[1];
-            stream >> c >> c >> i;
-            stream >> indexes[2];
+                stream >> indexes[0];
+                stream >> c >> c >> i;
+                stream >> indexes[1];
+                stream >> c >> c >> i;
+                stream >> indexes[2];
 
-            group->addObject(new Triangle(m_scene,
-                                          vertice[indexes[0]-1], vertice[indexes[1]-1], vertice[indexes[2]-1],
-                                          material));
+                group->addObject(new Triangle(m_scene,
+                                              vertice[indexes[0]-1], vertice[indexes[1]-1], vertice[indexes[2]-1],
+                                              material));
+            }
+            else if (line[0] == 'o') {
+                iObject++;
+
+                // Update material
+                if (iObject < (int)materials.size()) {
+                    material = materials[iObject];
+                }
+                else {
+                    material = Material(Color(255, 0, 0));
+                }
+            }
         }
     }
 
