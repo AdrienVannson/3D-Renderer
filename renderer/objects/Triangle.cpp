@@ -2,12 +2,11 @@
 #include "../Scene.hpp"
 
 Triangle::Triangle (Scene *scene, const Vect &A, const Vect &B, const Vect &C, const Material &material) :
-    Object (scene),
+    SolidObject (scene, material),
 
     m_A (A),
     m_B (B),
-    m_C (C),
-    m_material (material)
+    m_C (C)
 {}
 
 Triangle::~Triangle ()

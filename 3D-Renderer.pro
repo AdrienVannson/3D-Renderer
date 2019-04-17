@@ -37,7 +37,8 @@ SOURCES += \
     renderer/Material.cpp \
     renderer/Light.cpp \
     renderer/objects/Triangle.cpp \
-    renderer/objects/Group.cpp
+    renderer/objects/Group.cpp \
+    renderer/objects/SolidObject.cpp
 
 HEADERS += \
         Mainwindow.hpp \
@@ -51,7 +52,8 @@ HEADERS += \
     renderer/Material.hpp \
     renderer/Light.hpp \
     renderer/objects/Triangle.hpp \
-    renderer/objects/Group.hpp
+    renderer/objects/Group.hpp \
+    renderer/objects/SolidObject.hpp
 
 FORMS +=
 

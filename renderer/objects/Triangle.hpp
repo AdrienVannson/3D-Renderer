@@ -1,11 +1,11 @@
 #ifndef TRIANGLE_HPP
 #define TRIANGLE_HPP
 
-#include "Object.hpp"
+#include "SolidObject.hpp"
 #include "../Material.hpp"
 
 
-class Triangle : public Object
+class Triangle : public SolidObject
 {
 public:
     Triangle (Scene *scene, const Vect &A=Vect(), const Vect &B=Vect(), const Vect &C=Vect(), const Material &material=Material());
@@ -20,16 +20,11 @@ public:
     inline Vect C () const { return m_C; }
     inline void setC (const Vect &C) { m_C = C; }
 
-    inline Material material () const { return m_material; }
-    inline void setMaterial (const Material &material) { m_material = material; }
-
     virtual double collisionDate (const Ray &ray);
     virtual Color color (const Ray &ray);
 
 private:
     Vect m_A, m_B, m_C;
-
-    Material m_material;
 };
 
 #endif // TRIANGLE_HPP

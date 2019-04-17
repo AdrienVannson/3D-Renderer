@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
 // Teapot
-#if 0
+#if 1
     load("../teapot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
 // Torus knot
-#if 1
+#if 0
     load("../knot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));

@@ -2,11 +2,10 @@
 #include "../Scene.hpp"
 
 Sphere::Sphere (Scene *scene, const Vect &center, const double radius, const Material &material) :
-    Object (scene),
+    SolidObject (scene, material),
 
     m_center (center),
-    m_radius (radius),
-    m_material (material)
+    m_radius (radius)
 {}
 
 Sphere::~Sphere ()

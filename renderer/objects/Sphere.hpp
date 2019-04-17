@@ -3,11 +3,11 @@
 
 #include <cmath>
 
-#include "Object.hpp"
+#include "SolidObject.hpp"
 #include "../Material.hpp"
 
 
-class Sphere : public Object
+class Sphere : public SolidObject
 {
 public:
     Sphere (Scene *scene, const Vect &center=Vect(), const double radius=1, const Material &material=Material());
@@ -19,17 +19,12 @@ public:
     inline double radius () const { return m_radius; }
     inline void setRadius (const double radius) { m_radius = radius; }
 
-    inline Material material () const { return m_material; }
-    inline void setMaterial (const Material &material) { m_material = material; }
-
     virtual double collisionDate (const Ray &ray);
     virtual Color color (const Ray &ray);
 
 private:
     Vect m_center;
     double m_radius;
-
-    Material m_material;
 };
 
 #endif // SPHERE_HPP
