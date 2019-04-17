@@ -13,6 +13,10 @@ public:
     inline Material material () const { return m_material; }
     inline void setMaterial (const Material &material) { m_material = material; }
 
+    virtual Vect normal (const Vect &pos) const = 0;
+
+    virtual Color color (const Ray &ray) const;
+
 protected:
     Material m_material;
 };

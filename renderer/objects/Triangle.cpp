@@ -12,7 +12,7 @@ Triangle::Triangle (Scene *scene, const Vect &A, const Vect &B, const Vect &C, c
 Triangle::~Triangle ()
 {}
 
-double Triangle::collisionDate (const Ray &ray)
+double Triangle::collisionDate (const Ray &ray) const
 {
     const Vect AB = m_B - m_A;
     const Vect AC = m_C - m_A;
@@ -34,23 +34,9 @@ double Triangle::collisionDate (const Ray &ray)
     return INFINITY;
 }
 
-Color Triangle::color (const Ray &ray)
+Vect Triangle::normal (const Vect &pos) const
 {
-    const Vect intersection = ray.pos() + collisionDate(ray) * ray.dir();
     Vect normal = (m_B - m_A) ^ (m_C - m_A);
     normal.normalize();
-
-    // TODO: use all lights
-    Vect toLight = m_scene->lights()[0]->pos() - intersection;
-    toLight.normalize();
-
-    double dotProduct = normal * toLight;
-
-    if (dotProduct < 0) {
-        return Color(0, 0, 0);
-    }
-
-    return Color (dotProduct * m_material.color().red(),
-                  dotProduct * m_material.color().green(),
-                  dotProduct * m_material.color().blue());
+    return normal;
 }

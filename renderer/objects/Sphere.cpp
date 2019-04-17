@@ -11,7 +11,7 @@ Sphere::Sphere (Scene *scene, const Vect &center, const double radius, const Mat
 Sphere::~Sphere ()
 {}
 
-double Sphere::collisionDate (const Ray &ray)
+double Sphere::collisionDate (const Ray &ray) const
 {
     const Vect AB = m_center - ray.pos();
     const Vect v = ray.dir();
@@ -35,23 +35,9 @@ double Sphere::collisionDate (const Ray &ray)
     return INFINITY;
 }
 
-Color Sphere::color (const Ray &ray)
+Vect Sphere::normal (const Vect &pos) const
 {
-    const Vect intersection = ray.pos() + collisionDate(ray) * ray.dir();
-    Vect normal = intersection - m_center;
+    Vect normal = pos - m_center;
     normal.normalize();
-
-    // TODO: use all lights
-    Vect toLight = m_scene->lights()[0]->pos() - intersection;
-    toLight.normalize();
-
-    const double dotProduct = normal * toLight;
-
-    if (dotProduct < 0) {
-        return Color(0, 0, 0);
-    }
-
-    return Color (dotProduct * m_material.color().red(),
-                  dotProduct * m_material.color().green(),
-                  dotProduct * m_material.color().blue());
+    return normal;
 }

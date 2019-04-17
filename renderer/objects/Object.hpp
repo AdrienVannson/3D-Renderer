@@ -13,8 +13,8 @@ public:
     Object (Scene *scene);
     virtual ~Object ();
 
-    virtual double collisionDate (const Ray &ray) = 0;
-    virtual Color color (const Ray &ray) = 0;
+    virtual double collisionDate (const Ray &ray) const = 0;
+    virtual Color color (const Ray &ray) const = 0;
 
 protected:
     Scene *m_scene;

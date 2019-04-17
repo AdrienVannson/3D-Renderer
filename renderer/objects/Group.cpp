@@ -9,7 +9,7 @@ Group::Group (Scene *scene) :
 Group::~Group ()
 {}
 
-double Group::collisionDate (const Ray &ray)
+double Group::collisionDate (const Ray &ray) const
 {
     double minCollisionDate = INFINITY;
 
@@ -20,7 +20,7 @@ double Group::collisionDate (const Ray &ray)
     return minCollisionDate;
 }
 
-Color Group::color (const Ray &ray)
+Color Group::color (const Ray &ray) const
 {
     Object *object = 0;
     double minCollisionDate = INFINITY;
