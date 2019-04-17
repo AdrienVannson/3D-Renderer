@@ -24,6 +24,7 @@ public:
     inline const std::vector<Light*>& lights () const { return m_lights; }
     inline void addLight (Light *light) { m_lights.push_back(light); }
 
+    double collisionDate (const Ray &ray) const;
     Color color (const Ray &ray) const;
 
 private:

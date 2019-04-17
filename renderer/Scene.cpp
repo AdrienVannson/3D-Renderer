@@ -21,6 +21,17 @@ Scene::~Scene ()
     }
 }
 
+double Scene::collisionDate (const Ray &ray) const
+{
+    double minCollisionDate = INFINITY;
+
+    for (Object *object : m_objects) {
+        minCollisionDate = min(object->collisionDate(ray), minCollisionDate);
+    }
+
+    return minCollisionDate;
+}
+
 Color Scene::color (const Ray &ray) const
 {
     Object *object = 0;
