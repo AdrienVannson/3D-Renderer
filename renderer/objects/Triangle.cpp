@@ -22,6 +22,10 @@ double Triangle::collisionDate (const Ray &ray) const
 
     const double lambda = (n * PA) / (n * ray.dir());
 
+    if (lambda <= 0) {
+        return INFINITY;
+    }
+
     const Vect M = ray.pos() + lambda * ray.dir();
 
     // Check if M is in ABC
