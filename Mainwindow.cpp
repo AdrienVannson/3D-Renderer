@@ -17,8 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(720);
 #endif
 
+#define SCENE 4
+
 // Spheres
-#if 0
+#if SCENE == 1
     m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
     m_scene->addObject(new Sphere (m_scene, Vect(-3, -2, 0), 1, Material(Color(0, 255, 0)))); // Left
     m_scene->addObject(new Sphere (m_scene, Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right
@@ -27,26 +29,43 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_scene->camera()->setPos( Vect (10, 0, 0) );
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
-#endif
 
 // Teapot
-#if 1
+#elif SCENE == 2
     load("../teapot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
 
     m_scene->camera()->setPos( Vect (12, 12, 7.4) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
-#endif
 
 // Torus knot
-#if 0
+#elif SCENE == 3
     load("../knot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
 
     m_scene->camera()->setPos( Vect (14, 14, 6.8) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
+
+// Profile picture
+#elif SCENE == 4
+    load("../profile_picture.obj", {Material(Color(144, 214, 117)), Material(Color(255, 42, 24))});
+
+    m_scene->setBackgroundColor(Color (39, 123, 255)); // Blue
+
+    m_scene->addLight(new Light(Vect(5, -3, 6)));
+
+    m_scene->camera()->setPos( Vect (7, -7, 1.75) );
+
+    Vect dir = -m_scene->camera()->pos();
+    dir.normalize();
+    dir *= 2.5;
+
+    m_scene->camera()->setDir( dir );
+
+    m_scene->camera()->setWidth(256);
+    m_scene->camera()->setHeight(256);
 #endif
 
     // Create UI
