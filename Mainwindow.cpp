@@ -17,10 +17,9 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(720);
 #endif
 
-#define SCENE 4
+#define SCENE 5
 
-// Spheres
-#if SCENE == 1
+#if SCENE == 1 // Spheres
     m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
     m_scene->addObject(new Sphere (m_scene, Vect(-3, -2, 0), 1, Material(Color(0, 255, 0)))); // Left
     m_scene->addObject(new Sphere (m_scene, Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right
@@ -30,8 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setPos( Vect (10, 0, 0) );
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
 
-// Teapot
-#elif SCENE == 2
+#elif SCENE == 2 // Teapot
     load("../teapot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
@@ -39,8 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setPos( Vect (12, 12, 7.4) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
-// Torus knot
-#elif SCENE == 3
+#elif SCENE == 3 // Torus knot
     load("../knot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
@@ -48,8 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setPos( Vect (14, 14, 6.8) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
-// Profile picture
-#elif SCENE == 4
+#elif SCENE == 4 // Profile picture
     load("../profile_picture.obj", {Material(Color(144, 214, 117)), Material(Color(255, 42, 24))});
 
     m_scene->setBackgroundColor(Color (39, 123, 255)); // Blue
@@ -66,6 +62,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_scene->camera()->setWidth(256);
     m_scene->camera()->setHeight(256);
+
+#elif SCENE == 5 // Sphere (mirror effect)
+    load("../checkerboard.obj", {
+            Material(Color(255, 255, 255)),
+            Material(Color(0, 0, 0)),
+            Material(Color(255, 255, 255)),
+            Material(Color(0, 0, 0)),
+            Material(Color(255, 255, 255)),
+            Material(Color(0, 0, 0))
+    });
+
+    m_scene->addObject(new Sphere(m_scene, Vect(8, 8, 4), 4, Material(true)));
+
+    m_scene->addLight(new Light(5*Vect(8, 20, 12)));
+
+    m_scene->camera()->setPos( 30*Vect(1, 1, 1) );
+
+    Vect dir = -m_scene->camera()->pos();
+    dir.normalize();
+    dir *= 2.5;
+
+    m_scene->camera()->setDir( dir );
+
+    m_scene->camera()->setWidth(1024);
+    m_scene->camera()->setHeight(1024);
 #endif
 
     // Create UI

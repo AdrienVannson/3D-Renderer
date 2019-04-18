@@ -10,6 +10,16 @@ Color SolidObject::color (const Ray &ray) const
 {
     const Vect intersection = ray.pos() + collisionDate(ray) * ray.dir();
 
+    if (m_material.isMirror()) {
+        const Vect n = normal(intersection);
+        Vect dir = ray.dir() - 2 * (ray.dir() * n) * n;
+
+        Ray nextRay (intersection, dir);
+        nextRay.setPos( nextRay.pos() + 1e-12*nextRay.pos() );
+
+        return m_scene->color(nextRay);
+    }
+
     // TODO: use all lights
     Vect toLight = m_scene->lights()[0]->pos() - intersection;
     toLight.normalize();
