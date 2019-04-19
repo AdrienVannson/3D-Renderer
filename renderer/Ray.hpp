@@ -15,6 +15,8 @@ public:
     inline Vect dir () const { return m_dir; }
     inline void setDir (const Vect dir) { m_dir = dir; }
 
+    void moveByEpsilon ();
+
 
 private:
     Vect m_pos;

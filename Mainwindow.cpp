@@ -12,12 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Create scene
     m_scene = new Scene ();
-#if 0
+#if 1
     m_scene->camera()->setWidth(1280);
     m_scene->camera()->setHeight(720);
 #endif
 
-#define SCENE 5
+#define SCENE 6
 
 #if SCENE == 1 // Spheres
     m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
@@ -37,7 +37,27 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setPos( Vect (12, 12, 7.4) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
-#elif SCENE == 3 // Torus knot
+#elif SCENE == 3 // Monkey (with mirrors)
+    load("../monkey.obj");
+
+    m_scene->addLight(new Light(Vect(3, 2, 4)));
+
+    // Add mirror 1
+    Vect a1 (20, -2, 0);
+    Vect b1 (-10, -2, -10);
+    Vect c1 (-10, -2, 10);
+    m_scene->addObject(new Triangle (m_scene, a1, b1, c1, Material(true)));
+
+    // Add mirror 2
+    Vect a2 (-2, 20, 0);
+    Vect b2 (-2, -10, -10);
+    Vect c2 (-2, -10, 10);
+    m_scene->addObject(new Triangle (m_scene, a2, b2, c2, Material(true)));
+
+    m_scene->camera()->setPos( Vect (12, 12, 6.8) );
+    m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
+
+#elif SCENE == 4 // Torus knot
     load("../knot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
@@ -45,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setPos( Vect (14, 14, 6.8) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
-#elif SCENE == 4 // Profile picture
+#elif SCENE == 5 // Profile picture
     load("../profile_picture.obj", {Material(Color(144, 214, 117)), Material(Color(255, 42, 24))});
 
     m_scene->setBackgroundColor(Color (39, 123, 255)); // Blue
@@ -63,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setWidth(256);
     m_scene->camera()->setHeight(256);
 
-#elif SCENE == 5 // Sphere (mirror effect)
+#elif SCENE == 6 // Sphere (mirror effect)
     load("../checkerboard.obj", {
             Material(Color(255, 255, 255)),
             Material(Color(0, 0, 0)),

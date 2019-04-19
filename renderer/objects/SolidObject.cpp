@@ -12,10 +12,10 @@ Color SolidObject::color (const Ray &ray) const
 
     if (m_material.isMirror()) {
         const Vect n = normal(intersection);
-        Vect dir = ray.dir() - 2 * (ray.dir() * n) * n;
+        Vect nextDir = ray.dir() - 2 * (ray.dir() * n) * n;
 
-        Ray nextRay (intersection, dir);
-        nextRay.setPos( nextRay.pos() + 1e-12*nextRay.pos() );
+        Ray nextRay (intersection, nextDir);
+        nextRay.moveByEpsilon();
 
         return m_scene->color(nextRay);
     }
@@ -31,7 +31,7 @@ Color SolidObject::color (const Ray &ray) const
     }
 
     Ray nextRay (intersection, toLight);
-    nextRay.setPos( nextRay.pos() + 1e-12 * nextRay.dir() );
+    nextRay.moveByEpsilon();
 
     if (m_scene->collisionDate(nextRay) < dist(intersection, m_scene->lights()[0]->pos())) {
         return Color (0, 0, 0);
