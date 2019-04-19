@@ -7,5 +7,5 @@ Ray::Ray (const Vect &pos, const Vect &dir) :
 
 void Ray::moveByEpsilon ()
 {
-    m_pos += 1e-12 * m_dir;
+    m_pos += 1e-9 * m_dir;
 }
