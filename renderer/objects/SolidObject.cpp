@@ -6,7 +6,7 @@ SolidObject::SolidObject (Scene *scene, const Material &material) :
     m_material (material)
 {}
 
-Color SolidObject::color (const Ray &ray) const
+Color SolidObject::color (const Ray &ray, const int remainingDepth) const
 {
     const Vect intersection = ray.pos() + collisionDate(ray) * ray.dir();
 
@@ -17,7 +17,7 @@ Color SolidObject::color (const Ray &ray) const
         Ray nextRay (intersection, nextDir);
         nextRay.moveByEpsilon();
 
-        return m_scene->color(nextRay);
+        return m_scene->color(nextRay, remainingDepth-1);
     }
 
     // TODO: use all lights

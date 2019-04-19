@@ -15,7 +15,7 @@ public:
 
     virtual Vect normal (const Vect &pos) const = 0;
 
-    virtual Color color (const Ray &ray) const;
+    virtual Color color (const Ray &ray, const int remainingDepth) const;
 
 protected:
     Material m_material;

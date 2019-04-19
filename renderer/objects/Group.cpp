@@ -20,7 +20,7 @@ double Group::collisionDate (const Ray &ray) const
     return minCollisionDate;
 }
 
-Color Group::color (const Ray &ray) const
+Color Group::color (const Ray &ray, const int remainingDepth) const
 {
     Object *object = 0;
     double minCollisionDate = INFINITY;
@@ -35,5 +35,5 @@ Color Group::color (const Ray &ray) const
         }
     }
 
-    return object->color(ray);
+    return object->color(ray, remainingDepth);
 }

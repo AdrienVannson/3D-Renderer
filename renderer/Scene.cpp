@@ -33,8 +33,12 @@ double Scene::collisionDate (const Ray &ray) const
     return minCollisionDate;
 }
 
-Color Scene::color (const Ray &ray) const
+Color Scene::color (const Ray &ray, const int remainingDepth) const
 {
+    if (remainingDepth == 0) {
+        return m_backgroundColor;
+    }
+
     Object *object = 0;
     double minCollisionDate = INFINITY;
 
@@ -52,5 +56,5 @@ Color Scene::color (const Ray &ray) const
         return m_backgroundColor;
     }
 
-    return object->color(ray);
+    return object->color(ray, remainingDepth);
 }

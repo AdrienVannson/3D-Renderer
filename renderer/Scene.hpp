@@ -25,7 +25,7 @@ public:
     inline void addLight (Light *light) { m_lights.push_back(light); }
 
     double collisionDate (const Ray &ray) const;
-    Color color (const Ray &ray) const;
+    Color color (const Ray &ray, const int remainingDepth) const;
 
     inline Color backgroundColor () const { return m_backgroundColor; }
     inline void setBackgroundColor (const Color &backgroundColor) { m_backgroundColor = backgroundColor; }

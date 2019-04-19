@@ -16,7 +16,7 @@ public:
     inline void addObject (Object *object) { m_objects.push_back(object); }
 
     virtual double collisionDate (const Ray &ray) const;
-    virtual Color color (const Ray &ray) const;
+    virtual Color color (const Ray &ray, const int remainingDepth) const;
 
 private:
     std::vector<Object*> m_objects;

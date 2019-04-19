@@ -25,7 +25,7 @@ public:
     inline Vect dir () const { return m_dir; }
     inline void setDir (const Vect dir) { m_dir = dir; }
 
-    Color color (const int x, const int y) const;
+    Color color (const int x, const int y, const int remainingDepth) const;
 
 private:
     Scene *m_scene;

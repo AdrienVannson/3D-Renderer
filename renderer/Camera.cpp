@@ -11,7 +11,7 @@ Camera::Camera (Scene *scene, const int width, const int height) :
 
 }
 
-Color Camera::color (const int x, const int y) const
+Color Camera::color (const int x, const int y, const int remainingDepth) const
 {
     Vect i (m_dir.y(), -m_dir.x());
     i.normalize();
@@ -28,5 +28,5 @@ Color Camera::color (const int x, const int y) const
                + ((double)y/min(m_width, m_height) - 0.5 * m_height / min(m_width, m_height)) * j;
     dir.normalize();
 
-    return m_scene->color(Ray(m_pos, dir));
+    return m_scene->color(Ray(m_pos, dir), remainingDepth);
 }
