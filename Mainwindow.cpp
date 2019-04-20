@@ -1,7 +1,5 @@
 #include "Mainwindow.hpp"
 
-#include <iostream>
-#include <fstream>
 #include <vector>
 #include <sstream>
 
@@ -30,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
 
 #elif SCENE == 2 // Teapot
-    load("../teapot.obj");
+    load(":/resources/teapot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
 
@@ -38,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
 #elif SCENE == 3 // Monkey (with mirrors)
-    load("../monkey.obj");
+    load(":/resources/monkey.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
 
@@ -58,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
 #elif SCENE == 4 // Torus knot
-    load("../knot.obj");
+    load(":/resources/knot.obj");
 
     m_scene->addLight(new Light(Vect(3, 2, 4)));
 
@@ -66,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
 #elif SCENE == 5 // Profile picture
-    load("../profile_picture.obj", {Material(Color(144, 214, 117)), Material(Color(255, 42, 24))});
+    load(":/resources/profile_picture.obj", {Material(Color(144, 214, 117)), Material(Color(255, 42, 24))});
 
     m_scene->setBackgroundColor(Color (39, 123, 255)); // Blue
 
@@ -84,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(256);
 
 #elif SCENE == 6 // Sphere (mirror effect)
-    load("../checkerboard.obj", {
+    load(":/resources/checkerboard.obj", {
             Material(Color(255, 255, 255)),
             Material(Color(0, 0, 0)),
             Material(Color(255, 255, 255)),
@@ -140,10 +138,13 @@ void MainWindow::load (QString filename, const std::vector<Material> &materials)
     vector<Vect> vertice;
     Material material;
 
-    fstream file (filename.toStdString().c_str(), fstream::in);
-    string line;
+    QFile file (filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
 
-    while (getline(file, line)) {
+    QTextStream stream (&file);
+
+    while (!stream.atEnd()) {
+        const string line = stream.readLine().toStdString();
         stringstream stream;
         stream << line;
 

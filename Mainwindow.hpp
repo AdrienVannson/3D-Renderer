@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QString>
+#include <QFile>
+#include <QTextStream>
 
 #include "renderer/Scene.hpp"
 #include "renderer/objects/Sphere.hpp"

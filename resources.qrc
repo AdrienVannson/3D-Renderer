@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/checkerboard.obj</file>
+        <file>resources/cube.obj</file>
+        <file>resources/knot.obj</file>
+        <file>resources/monkey.obj</file>
+        <file>resources/profile_picture.obj</file>
+        <file>resources/teapot.obj</file>
+    </qresource>
+</RCC>
