@@ -7,8 +7,11 @@
 class Vect
 {
 public:
-
-    Vect (const double x=0, const double y=0, const double z=0);
+    inline Vect (const double x=0, const double y=0, const double z=0) :
+        m_x (x),
+        m_y (y),
+        m_z (z)
+    {}
 
     inline double x () const { return m_x; }
     inline void setX (const double x) { m_x = x; }
@@ -19,16 +22,23 @@ public:
     inline double z () const { return m_z; }
     inline void setZ (const double z) { m_z = z; }
 
-    double norm () const;
-    void normalize ();
+    inline double norm () const { return sqrt(m_x*m_x + m_y*m_y + m_z*m_z); };
 
-    Vect operator- () const;
+    inline void normalize ()
+    {
+        const double currentNorm = norm();
 
-    void operator*= (const double k);
-    void operator/= (const double k);
+        m_x /= currentNorm;
+        m_y /= currentNorm;
+        m_z /= currentNorm;
+    }
 
-    void operator+= (const Vect &v);
-    void operator-= (const Vect &v);
+    inline Vect operator- () const { return Vect (-m_x, -m_y, -m_z); };
+
+    inline void operator*= (const double k) { m_x*=k; m_y*=k; m_z*=k; }
+    inline void operator/= (const double k) { m_x /= k; m_y /= k; m_z /= k; }
+    inline void operator+= (const Vect &v) { m_x += v.m_x; m_y += v.m_y; m_z += v.m_z; }
+    inline void operator-= (const Vect &v) { m_x -= v.m_x; m_y -= v.m_y; m_z -= v.m_z; }
 
 protected:
     double m_x, m_y, m_z;
