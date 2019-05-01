@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(720);
 #endif
 
-#define SCENE 1
+#define SCENE 7
 
 #if SCENE == 1 // Spheres
     m_scene->addObject(new Sphere (m_scene, Vect(-1, 0, 0), 1, Material(Color(255, 0, 0))));
@@ -105,6 +105,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_scene->camera()->setWidth(1024);
     m_scene->camera()->setHeight(1024);
+#elif SCENE == 7 // Multiple lights
+    load(":/resources/floor.obj", {
+             Material(Color(100, 100, 100)),
+             Material(Color(50, 50, 50))
+    });
+
+    m_scene->addObject(new Sphere(m_scene, Vect(0, 0, 3), 2, Material(Color(255, 0, 0))));
+
+    m_scene->addLight(new Light(Vect(0, 50, 150), 0.5));
+    m_scene->addLight(new Light(Vect(0, -50, 150), 0.5));
+    m_scene->camera()->setPos(Vect(30, 0, 6));
+
+    Vect dir = -m_scene->camera()->pos();
+    dir.normalize();
+    dir *= 2.5;
+    m_scene->camera()->setDir( dir );
 #endif
 
     // Create UI

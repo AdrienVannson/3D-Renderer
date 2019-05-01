@@ -12,23 +12,26 @@ Color SolidObject::color (const Ray &ray, const int remainingDepth) const
 
     Color finalColor;
 
-    // TODO: use all lights
-    Vect toLight = m_scene->lights()[0]->pos() - intersection;
-    toLight.normalize();
+    for (const Light *light : m_scene->lights()) {
+        Vect toLight = light->pos() - intersection;
+        toLight.normalize();
 
-    double dotProduct = normal(intersection) * toLight;
+        double dotProduct = normal(intersection) * toLight;
 
-    if (dotProduct >= 0) {
-        Ray nextRay (intersection, toLight);
-        nextRay.moveByEpsilon();
+        if (dotProduct >= 0) {
+            Ray nextRay (intersection, toLight);
+            nextRay.moveByEpsilon();
 
-        if (m_scene->collisionDate(nextRay) >= dist(intersection, m_scene->lights()[0]->pos())) {
-            finalColor += Color (dotProduct * m_material.color().red(),
-                                 dotProduct * m_material.color().green(),
-                                 dotProduct * m_material.color().blue());
+            if (m_scene->collisionDate(nextRay) >= dist(intersection, m_scene->lights()[0]->pos())) {
+                Color color (dotProduct * m_material.color().red(),
+                             dotProduct * m_material.color().green(),
+                             dotProduct * m_material.color().blue());
+                color *= light->intensity();
+
+                finalColor += color;
+            }
         }
     }
-
 
     // Reflection
     if (m_material.reflectionCoef() != 0) {

@@ -6,5 +6,6 @@
         <file>resources/monkey.obj</file>
         <file>resources/profile_picture.obj</file>
         <file>resources/teapot.obj</file>
+        <file>resources/floor.obj</file>
     </qresource>
 </RCC>
