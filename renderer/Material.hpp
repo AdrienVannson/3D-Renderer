@@ -7,18 +7,17 @@
 class Material
 {
 public:
-    Material (const Color &color=Color());
-    Material (const bool isMirror);
+    Material (const Color &color=Color(), const double reflectionCoef=0);
 
     inline Color color () const { return m_color; }
     inline void setColor (const Color &color) { m_color = color; }
 
-    inline bool isMirror () const { return m_isMirror; }
-    inline void setIsMirror (const bool isMirror) { m_isMirror = isMirror; }
+    inline double reflectionCoef () const { return m_reflectionCoef; }
+    inline void setReflectionCoef (const double reflectionCoef) { m_reflectionCoef = reflectionCoef; }
 
 private:
     Color m_color;
-    bool m_isMirror;
+    double m_reflectionCoef;
 };
 
 #endif // MATERIAL_HPP

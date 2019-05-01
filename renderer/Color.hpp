@@ -20,6 +20,10 @@ public:
     int hex () const;
 
 
+    void operator+= (const Color &other);
+    void operator*= (const double x);
+
+
 private:
     int m_red, m_green, m_blue;
 };

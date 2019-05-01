@@ -15,12 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(720);
 #endif
 
-#define SCENE 6
+#define SCENE 1
 
 #if SCENE == 1 // Spheres
-    m_scene->addObject(new Sphere (m_scene, Vect(0, 0, 0), 1, Material(Color(255, 0, 0))));
-    m_scene->addObject(new Sphere (m_scene, Vect(-3, -2, 0), 1, Material(Color(0, 255, 0)))); // Left
-    m_scene->addObject(new Sphere (m_scene, Vect(-3, 2, 0), 1, Material(Color(0, 0, 255)))); // Right
+    m_scene->addObject(new Sphere (m_scene, Vect(-1, 0, 0), 1, Material(Color(255, 0, 0))));
+    m_scene->addObject(new Sphere (m_scene, Vect(-1, -2.1, 0), 1, Material(Color(0, 255, 0)))); // Left
+    m_scene->addObject(new Sphere (m_scene, Vect(-1, 2.1, 0), 1, Material(Color(0, 0, 255), 0.6))); // Right
 
     m_scene->addLight(new Light(Vect(3, 2, 2)));
 
@@ -44,13 +44,13 @@ MainWindow::MainWindow(QWidget *parent) :
     Vect a1 (20, -2, 0);
     Vect b1 (-10, -2, -10);
     Vect c1 (-10, -2, 10);
-    m_scene->addObject(new Triangle (m_scene, a1, b1, c1, Material(true)));
+    m_scene->addObject(new Triangle (m_scene, a1, b1, c1, Material(Color(0, 0, 0), 1)));
 
     // Add mirror 2
     Vect a2 (-2, 20, 0);
     Vect b2 (-2, -10, -10);
     Vect c2 (-2, -10, 10);
-    m_scene->addObject(new Triangle (m_scene, a2, b2, c2, Material(true)));
+    m_scene->addObject(new Triangle (m_scene, a2, b2, c2, Material(Color(0, 0, 0), 1)));
 
     m_scene->camera()->setPos( Vect (12, 12, 6.8) );
     m_scene->camera()->setDir( Vect (-3, -3, -1.5) );
@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
             Material(Color(0, 0, 0))
     });
 
-    m_scene->addObject(new Sphere(m_scene, Vect(8, 8, 4), 4, Material(true)));
+    m_scene->addObject(new Sphere(m_scene, Vect(8, 8, 4), 4, Material(Color(0, 0, 0), 1)));
 
     m_scene->addLight(new Light(5*Vect(8, 20, 12)));
 

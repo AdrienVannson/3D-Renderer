@@ -10,15 +10,7 @@ Color SolidObject::color (const Ray &ray, const int remainingDepth) const
 {
     const Vect intersection = ray.pos() + collisionDate(ray) * ray.dir();
 
-    if (m_material.isMirror()) {
-        const Vect n = normal(intersection);
-        Vect nextDir = ray.dir() - 2 * (ray.dir() * n) * n;
-
-        Ray nextRay (intersection, nextDir);
-        nextRay.moveByEpsilon();
-
-        return m_scene->color(nextRay, remainingDepth-1);
-    }
+    Color finalColor;
 
     // TODO: use all lights
     Vect toLight = m_scene->lights()[0]->pos() - intersection;
@@ -26,18 +18,31 @@ Color SolidObject::color (const Ray &ray, const int remainingDepth) const
 
     double dotProduct = normal(intersection) * toLight;
 
-    if (dotProduct < 0) {
-        return Color(0, 0, 0);
+    if (dotProduct >= 0) {
+        Ray nextRay (intersection, toLight);
+        nextRay.moveByEpsilon();
+
+        if (m_scene->collisionDate(nextRay) >= dist(intersection, m_scene->lights()[0]->pos())) {
+            finalColor += Color (dotProduct * m_material.color().red(),
+                                 dotProduct * m_material.color().green(),
+                                 dotProduct * m_material.color().blue());
+        }
     }
 
-    Ray nextRay (intersection, toLight);
-    nextRay.moveByEpsilon();
 
-    if (m_scene->collisionDate(nextRay) < dist(intersection, m_scene->lights()[0]->pos())) {
-        return Color (0, 0, 0);
+    // Reflection
+    if (m_material.reflectionCoef() != 0) {
+        const Vect n = normal(intersection);
+        Vect nextDir = ray.dir() - 2 * (ray.dir() * n) * n;
+
+        Ray nextRay (intersection, nextDir);
+        nextRay.moveByEpsilon();
+
+        Color nextColor = m_scene->color(nextRay, remainingDepth-1);
+        nextColor *= m_material.reflectionCoef();
+
+        finalColor += nextColor;
     }
 
-    return Color (dotProduct * m_material.color().red(),
-                  dotProduct * m_material.color().green(),
-                  dotProduct * m_material.color().blue());
+    return finalColor;
 }
