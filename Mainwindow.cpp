@@ -15,16 +15,21 @@ MainWindow::MainWindow(QWidget *parent) :
     m_scene->camera()->setHeight(720);
 #endif
 
-#define SCENE 7
+#define SCENE 1
 
 #if SCENE == 1 // Spheres
-    m_scene->addObject(new Sphere (m_scene, Vect(-1, 0, 0), 1, Material(Color(255, 0, 0))));
-    m_scene->addObject(new Sphere (m_scene, Vect(-1, -2.1, 0), 1, Material(Color(0, 255, 0)))); // Left
-    m_scene->addObject(new Sphere (m_scene, Vect(-1, 2.1, 0), 1, Material(Color(0, 0, 255), 0.6))); // Right
+    load(":/resources/floor.obj", {
+             Material(Color(100, 100, 100)),
+             Material(Color(50, 50, 50))
+    });
+
+    m_scene->addObject(new Sphere (m_scene, Vect(-1, 0, 1), 1, Material(Color(255, 0, 0))));
+    m_scene->addObject(new Sphere (m_scene, Vect(-1, -2.1, 1), 1, Material(Color(0, 255, 0)))); // Left
+    m_scene->addObject(new Sphere (m_scene, Vect(-1, 2.1, 1), 1, Material(Color(0, 0, 255), 0.6))); // Right
 
     m_scene->addLight(new Light(Vect(3, 2, 2)));
 
-    m_scene->camera()->setPos( Vect (10, 0, 0) );
+    m_scene->camera()->setPos( Vect (10, 0, 1) );
     m_scene->camera()->setDir( Vect (-3, 0, 0) );
 
 #elif SCENE == 2 // Teapot
