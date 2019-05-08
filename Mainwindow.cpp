@@ -10,12 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Create scene
     m_scene = new Scene ();
-#if 1
+#if 0
     m_scene->camera()->setWidth(1280);
     m_scene->camera()->setHeight(720);
 #endif
 
-#define SCENE 1
+#define SCENE 8
 
 #if SCENE == 1 // Spheres
     load(":/resources/floor.obj", {
@@ -126,7 +126,26 @@ MainWindow::MainWindow(QWidget *parent) :
     dir.normalize();
     dir *= 2.5;
     m_scene->camera()->setDir( dir );
+#elif SCENE == 8 // Sphere with refraction
+    m_scene->setBackgroundColor(Color(40, 120, 255));
+
+    load(":/resources/floor.obj", {
+             Material(Color(255, 0, 0)),
+             Material(Color(0, 0, 255))
+    });
+
+    Material material (Color(50, 50, 50));
+    material.setRefractionCoef(0.8);
+    material.setRefractiveIndex(1.3);
+
+    m_scene->addObject(new Sphere (m_scene, Vect(5, 0, 1), 1, material));
+
+    m_scene->addLight(new Light(Vect(6, 2, 5)));
+
+    m_scene->camera()->setPos( Vect (17, -0.5, 5) );
+    m_scene->camera()->setDir( Vect (-3, 0.1, -1) );
 #endif
+
 
     // Create UI
     QImage image = QImage (m_scene->camera()->width(), m_scene->camera()->height(), QImage::Format_RGB32);

@@ -1,6 +1,10 @@
 #include "SolidObject.hpp"
 #include "../Scene.hpp"
 
+#include <algorithm>
+
+using namespace std;
+
 SolidObject::SolidObject (Scene *scene, const Material &material) :
     Object (scene),
     m_material (material)
@@ -45,6 +49,41 @@ Color SolidObject::color (const Ray &ray, const int remainingDepth) const
         nextColor *= m_material.reflectionCoef();
 
         finalColor += nextColor;
+    }
+
+    // Refraction
+    if (m_material.refractionCoef() != 0) {
+        Vect n = normal(intersection);
+
+        // Snell's law
+        double n1 = 1;
+        double n2 = material().refractiveIndex();
+
+        double cosTheta1 = ray.dir() * n;
+
+        if (cosTheta1 < 0) {
+            cosTheta1 = -cosTheta1;
+        }
+        else {
+            swap(n1, n2);
+            n *= -1;
+        }
+
+        const double r = n1 / n2;
+        const double k = 1 - r*r * (1 - cosTheta1*cosTheta1);
+
+        if (k >= 0) { // No refraction otherwise
+            Vect nextDir = r * ray.dir() + (r * cosTheta1 - sqrt(k)) * n;
+            nextDir.normalize();
+
+            Ray nextRay (intersection, nextDir);
+            nextRay.moveByEpsilon();
+
+            Color nextColor = m_scene->color(nextRay, remainingDepth-1);
+            nextColor *= m_material.refractionCoef();
+
+            finalColor += nextColor;
+        }
     }
 
     return finalColor;
