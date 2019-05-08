@@ -7,7 +7,7 @@
 class Vect
 {
 public:
-    inline Vect (const double x=0, const double y=0, const double z=0) :
+    explicit inline Vect (const double x=0, const double y=0, const double z=0) :
         m_x (x),
         m_y (y),
         m_z (z)
