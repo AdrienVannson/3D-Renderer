@@ -24,8 +24,15 @@ public:
 
     inline double norm () const { return sqrt(m_x*m_x + m_y*m_y + m_z*m_z); };
 
+    inline bool isNull () const
+    {
+        return m_x == 0. && m_y == 0. && m_z == 0.;
+    }
+
     inline void normalize ()
     {
+        if (isNull()) return;
+
         const double currentNorm = norm();
 
         m_x /= currentNorm;
