@@ -1,4 +1,7 @@
+#include <sstream>
+
 #include "Scene.hpp"
+#include "objects/Triangle.hpp"
 
 using namespace std;
 
@@ -57,4 +60,66 @@ Color Scene::color (const Ray &ray, const int remainingDepth) const
     }
 
     return object->color(ray, remainingDepth);
+}
+
+void Scene::load (QString filename, const std::vector<Material> &materials)
+{
+    Group *group = new Group (this);
+
+    int iObject = -1;
+    vector<Vect> vertice;
+    Material material;
+
+    QFile file (filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QTextStream stream (&file);
+
+    while (!stream.atEnd()) {
+        const string line = stream.readLine().toStdString();
+        stringstream stream;
+        stream << line;
+
+        if (line[1] == ' ') {
+            if (line[0] == 'v') {
+                char c;
+                stream >> c;
+
+                double x, y, z;
+                stream >> x >> y >> z;
+
+                vertice.push_back(Vect(x, y, z));
+            }
+            else if (line[0] == 'f') {
+                char c;
+                int i;
+                stream >> c;
+
+                int indexes[3];
+
+                stream >> indexes[0];
+                stream >> c >> c >> i;
+                stream >> indexes[1];
+                stream >> c >> c >> i;
+                stream >> indexes[2];
+
+                group->addObject(new Triangle(this,
+                                              vertice[indexes[0]-1], vertice[indexes[1]-1], vertice[indexes[2]-1],
+                                              material));
+            }
+            else if (line[0] == 'o') {
+                iObject++;
+
+                // Update material
+                if (iObject < (int)materials.size()) {
+                    material = materials[iObject];
+                }
+                else {
+                    material = Material(Color(255, 0, 0));
+                }
+            }
+        }
+    }
+
+    addObject(group);
 }

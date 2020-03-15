@@ -27,6 +27,7 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         Mainwindow.cpp \
+    renderer/Image.cpp \
     renderer/Scene.cpp \
     renderer/Camera.cpp \
     renderer/Vect.cpp \
@@ -39,10 +40,13 @@ SOURCES += \
     renderer/Light.cpp \
     renderer/objects/Triangle.cpp \
     renderer/objects/Group.cpp \
-    renderer/objects/SolidObject.cpp
+    renderer/objects/SolidObject.cpp \
+    scenes/spheres.cpp \
+    scenes/teapot.cpp
 
 HEADERS += \
         Mainwindow.hpp \
+    renderer/Image.hpp \
     renderer/Scene.hpp \
     renderer/Camera.hpp \
     renderer/Vect.hpp \
@@ -55,7 +59,9 @@ HEADERS += \
     renderer/Light.hpp \
     renderer/objects/Triangle.hpp \
     renderer/objects/Group.hpp \
-    renderer/objects/SolidObject.hpp
+    renderer/objects/SolidObject.hpp \
+    scenes/spheres.hpp \
+    scenes/teapot.hpp
 
 FORMS +=
 

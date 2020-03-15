@@ -8,6 +8,12 @@
 #include "Vect.hpp"
 #include "Light.hpp"
 #include "objects/Object.hpp"
+#include "Material.hpp"
+#include "objects/Group.hpp"
+
+#include <QString>
+#include <QFile>
+#include <QTextStream>
 
 
 class Scene
@@ -29,6 +35,8 @@ public:
 
     inline Color backgroundColor () const { return m_backgroundColor; }
     inline void setBackgroundColor (const Color &backgroundColor) { m_backgroundColor = backgroundColor; }
+
+    void load (QString filename, const std::vector<Material> &materials={});
 
 private:
     Camera *m_camera;

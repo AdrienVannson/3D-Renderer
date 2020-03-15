@@ -3,7 +3,7 @@
 
 #include "Vect.hpp"
 #include "Color.hpp"
-#include "objects/Sphere.hpp" // TODEL
+#include "Image.hpp"
 
 class Scene;
 
@@ -26,6 +26,7 @@ public:
     inline void setDir (const Vect dir) { m_dir = dir; }
 
     Color color (const int x, const int y, const int remainingDepth) const;
+    Image* image () const;
 
 private:
     Scene *m_scene;

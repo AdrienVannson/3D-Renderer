@@ -30,3 +30,16 @@ Color Camera::color (const int x, const int y, const int remainingDepth) const
 
     return m_scene->color(Ray(m_pos, dir), remainingDepth);
 }
+
+Image* Camera::image () const
+{
+    Image *image = new Image (m_width, m_height);
+
+    for (int x=0; x<m_width; x++) {
+        for (int y=0; y<m_height; y++) {
+            image->setColor(x, y, color(x, y, 10));
+        }
+    }
+
+    return image;
+}
