@@ -43,7 +43,8 @@ SOURCES += \
     renderer/objects/SolidObject.cpp \
     scenes/monkeys.cpp \
     scenes/spheres.cpp \
-    scenes/teapot.cpp
+    scenes/teapot.cpp \
+    scenes/torus_knot.cpp
 
 HEADERS += \
         Mainwindow.hpp \
@@ -63,7 +64,8 @@ HEADERS += \
     renderer/objects/SolidObject.hpp \
     scenes/monkeys.hpp \
     scenes/spheres.hpp \
-    scenes/teapot.hpp
+    scenes/teapot.hpp \
+    scenes/torus_knot.hpp
 
 FORMS +=
 
