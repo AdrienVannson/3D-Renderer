@@ -41,6 +41,7 @@ SOURCES += \
     renderer/objects/Triangle.cpp \
     renderer/objects/Group.cpp \
     renderer/objects/SolidObject.cpp \
+    scenes/monkeys.cpp \
     scenes/spheres.cpp \
     scenes/teapot.cpp
 
@@ -60,6 +61,7 @@ HEADERS += \
     renderer/objects/Triangle.hpp \
     renderer/objects/Group.hpp \
     renderer/objects/SolidObject.hpp \
+    scenes/monkeys.hpp \
     scenes/spheres.hpp \
     scenes/teapot.hpp
 
