@@ -1,4 +1,5 @@
 #include "spheres.hpp"
+#include "renderer/objects/Sphere.hpp"
 
 Image* generateImageSpheres ()
 {
