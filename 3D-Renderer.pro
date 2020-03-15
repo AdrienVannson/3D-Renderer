@@ -31,6 +31,7 @@ SOURCES += \
     renderer/Camera.cpp \
     renderer/Vect.cpp \
     renderer/Color.cpp \
+    renderer/objects/implicit-objects/ImplicitObject.cpp \
     renderer/objects/Object.cpp \
     renderer/Ray.cpp \
     renderer/objects/Sphere.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     renderer/Camera.hpp \
     renderer/Vect.hpp \
     renderer/Color.hpp \
+    renderer/objects/implicit-objects/ImplicitObject.hpp \
     renderer/objects/Object.hpp \
     renderer/Ray.hpp \
     renderer/objects/Sphere.hpp \
