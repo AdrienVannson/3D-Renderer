@@ -19,7 +19,7 @@ double ImplicitObject::collisionDate (const Ray &ray) const
             return INFINITY;
         }
 
-        if (dist < 0.01) {
+        if (dist < 1e-6) {
             return t;
         }
     }
