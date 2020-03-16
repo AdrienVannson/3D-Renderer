@@ -42,6 +42,7 @@ SOURCES += \
     renderer/objects/Group.cpp \
     renderer/objects/SolidObject.cpp \
     scenes/monkeys.cpp \
+    scenes/sphere_refraction.cpp \
     scenes/spheres.cpp \
     scenes/teapot.cpp \
     scenes/torus_knot.cpp
@@ -63,6 +64,7 @@ HEADERS += \
     renderer/objects/Group.hpp \
     renderer/objects/SolidObject.hpp \
     scenes/monkeys.hpp \
+    scenes/sphere_refraction.hpp \
     scenes/spheres.hpp \
     scenes/teapot.hpp \
     scenes/torus_knot.hpp
