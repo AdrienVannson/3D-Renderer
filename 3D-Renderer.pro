@@ -42,6 +42,7 @@ SOURCES += \
     renderer/objects/Group.cpp \
     renderer/objects/SolidObject.cpp \
     scenes/monkeys.cpp \
+    scenes/profile_picture.cpp \
     scenes/several_lights.cpp \
     scenes/sphere_mirror.cpp \
     scenes/sphere_refraction.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     renderer/objects/Group.hpp \
     renderer/objects/SolidObject.hpp \
     scenes/monkeys.hpp \
+    scenes/profile_picture.hpp \
     scenes/several_lights.hpp \
     scenes/sphere_mirror.hpp \
     scenes/sphere_refraction.hpp \
