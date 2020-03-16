@@ -43,6 +43,7 @@ SOURCES += \
     renderer/objects/SolidObject.cpp \
     scenes/monkeys.cpp \
     scenes/several_lights.cpp \
+    scenes/sphere_mirror.cpp \
     scenes/sphere_refraction.cpp \
     scenes/spheres.cpp \
     scenes/teapot.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     renderer/objects/SolidObject.hpp \
     scenes/monkeys.hpp \
     scenes/several_lights.hpp \
+    scenes/sphere_mirror.hpp \
     scenes/sphere_refraction.hpp \
     scenes/spheres.hpp \
     scenes/teapot.hpp \
