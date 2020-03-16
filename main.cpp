@@ -1,6 +1,7 @@
 #include <QApplication>
-
-#include "Mainwindow.hpp"
+#include <QMainWindow>
+#include <QImage>
+#include <QLabel>
 
 // (1) Update to change the scene
 #include "scenes/teapot.hpp"
