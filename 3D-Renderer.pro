@@ -26,6 +26,7 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+    renderer/Box.cpp \
     renderer/Image.cpp \
     renderer/Scene.cpp \
     renderer/Camera.cpp \
@@ -50,6 +51,7 @@ SOURCES += \
     scenes/torus_knot.cpp
 
 HEADERS += \
+    renderer/Box.hpp \
     renderer/Image.hpp \
     renderer/Scene.hpp \
     renderer/Camera.hpp \

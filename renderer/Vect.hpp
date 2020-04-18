@@ -22,6 +22,32 @@ public:
     inline double z () const { return m_z; }
     inline void setZ (const double z) { m_z = z; }
 
+    inline double& operator[] (const int i)
+    {
+        switch (i) {
+        case 0:
+            return m_x;
+        case 1:
+            return m_y;
+        case 2:
+            return m_z;
+        }
+        exit(1);
+    }
+
+    inline double operator[] (const int i) const
+    {
+        switch (i) {
+        case 0:
+            return m_x;
+        case 1:
+            return m_y;
+        case 2:
+            return m_z;
+        }
+        exit(1);
+    }
+
     inline double norm () const { return sqrt(m_x*m_x + m_y*m_y + m_z*m_z); };
 
     inline bool isNull () const
