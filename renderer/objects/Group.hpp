@@ -4,7 +4,7 @@
 #include <vector>
 #include <cmath>
 
-#include "Object.hpp"
+#include "../Object.hpp"
 
 
 class Group : public Object

@@ -7,7 +7,7 @@
 #include "Camera.hpp"
 #include "Vect.hpp"
 #include "Light.hpp"
-#include "objects/Object.hpp"
+#include "Object.hpp"
 #include "Material.hpp"
 #include "objects/Group.hpp"
 

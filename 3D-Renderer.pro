@@ -32,7 +32,7 @@ SOURCES += \
     renderer/Vect.cpp \
     renderer/Color.cpp \
     renderer/objects/implicit-objects/ImplicitObject.cpp \
-    renderer/objects/Object.cpp \
+    renderer/Object.cpp \
     renderer/Ray.cpp \
     renderer/objects/Sphere.cpp \
     renderer/Material.cpp \
@@ -56,7 +56,7 @@ HEADERS += \
     renderer/Vect.hpp \
     renderer/Color.hpp \
     renderer/objects/implicit-objects/ImplicitObject.hpp \
-    renderer/objects/Object.hpp \
+    renderer/Object.hpp \
     renderer/Ray.hpp \
     renderer/objects/Sphere.hpp \
     renderer/Material.hpp \

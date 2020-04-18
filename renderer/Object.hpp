@@ -1,8 +1,8 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
-#include "../Ray.hpp"
-#include "../Color.hpp"
+#include "Ray.hpp"
+#include "Color.hpp"
 
 class Scene;
 
