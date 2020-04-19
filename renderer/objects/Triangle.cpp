@@ -40,7 +40,17 @@ double Triangle::collisionDate (const Ray &ray) const
 
 Vect Triangle::normal (const Vect &pos) const
 {
+    (void)pos;
     Vect normal = (m_B - m_A) ^ (m_C - m_A);
     normal.normalize();
     return normal;
+}
+
+Box Triangle::boundingBox () const
+{
+    Box res;
+    res.addPoint(m_A);
+    res.addPoint(m_B);
+    res.addPoint(m_C);
+    return res;
 }

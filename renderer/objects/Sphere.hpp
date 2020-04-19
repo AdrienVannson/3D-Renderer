@@ -22,6 +22,8 @@ public:
     virtual double collisionDate (const Ray &ray) const override;
     virtual Vect normal (const Vect &pos) const override;
 
+    virtual Box boundingBox () const override;
+
 private:
     Vect m_center;
     double m_radius;

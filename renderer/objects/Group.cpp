@@ -37,3 +37,14 @@ Color Group::color (const Ray &ray, const int remainingDepth) const
 
     return object->color(ray, remainingDepth);
 }
+
+Box Group::boundingBox() const
+{
+    Box res;
+
+    for (Object* obj : m_objects) {
+        res = res + obj->boundingBox();
+    }
+
+    return res;
+}

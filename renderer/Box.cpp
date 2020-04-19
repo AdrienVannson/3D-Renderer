@@ -62,3 +62,18 @@ void Box::addPoint (const Vect point)
         }
     }
 }
+
+Box operator+ (const Box &a, const Box &b)
+{
+    if (a.isEmtpy()) return b;
+    if (b.isEmtpy()) return a;
+
+    Vect minVertex, maxVertex;
+
+    for (int i=0; i<3; i++) {
+        minVertex[i] = std::min(a.m_minVertex[i], b.m_minVertex[i]);
+        maxVertex[i] = std::max(a.m_maxVertex[i], b.m_maxVertex[i]);
+    }
+
+    return Box (minVertex, maxVertex);
+}

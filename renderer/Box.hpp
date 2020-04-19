@@ -22,10 +22,16 @@ public:
 
     void addPoint (const Vect point);
 
+    friend Box operator+ (const Box &a, const Box &b);
+    //friend Box operator* (const Box &a, const Box &b);
 
 private:
     Vect m_minVertex, m_maxVertex;
     bool m_isEmpty;
 };
+
+Box operator+ (const Box &a, const Box &b); // Union
+//Box operator* (const Box &a, const Box &b); // Intersection (TODO)
+
 
 #endif // BOX_HPP

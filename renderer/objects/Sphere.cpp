@@ -41,3 +41,9 @@ Vect Sphere::normal (const Vect &pos) const
     normal.normalize();
     return normal;
 }
+
+Box Sphere::boundingBox () const
+{
+    return Box {m_center - Vect(m_radius, m_radius, m_radius),
+                m_center + Vect(m_radius, m_radius, m_radius)};
+}

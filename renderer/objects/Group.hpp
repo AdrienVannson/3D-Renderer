@@ -18,6 +18,8 @@ public:
     virtual double collisionDate (const Ray &ray) const override;
     virtual Color color (const Ray &ray, const int remainingDepth) const override;
 
+    virtual Box boundingBox() const override;
+
 private:
     std::vector<Object*> m_objects;
 };
