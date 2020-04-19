@@ -19,8 +19,8 @@ public:
     inline double radius () const { return m_radius; }
     inline void setRadius (const double radius) { m_radius = radius; }
 
-    virtual double collisionDate (const Ray &ray) const;
-    virtual Vect normal (const Vect &pos) const;
+    virtual double collisionDate (const Ray &ray) const override;
+    virtual Vect normal (const Vect &pos) const override;
 
 private:
     Vect m_center;

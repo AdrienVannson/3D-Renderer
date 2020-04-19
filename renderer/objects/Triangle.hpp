@@ -20,8 +20,8 @@ public:
     inline Vect C () const { return m_C; }
     inline void setC (const Vect &C) { m_C = C; }
 
-    virtual double collisionDate (const Ray &ray) const;
-    virtual Vect normal (const Vect &pos) const;
+    virtual double collisionDate (const Ray &ray) const override;
+    virtual Vect normal (const Vect &pos) const override;
 
 private:
     Vect m_A, m_B, m_C;
