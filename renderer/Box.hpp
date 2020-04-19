@@ -10,7 +10,7 @@ public:
     Box ();
     Box (const Vect minVertex, const Vect maxVertex);
 
-    bool isEmtpy () const;
+    bool isEmpty () const;
 
     Vect minVertex () const;
     Vect maxVertex () const;
@@ -23,7 +23,7 @@ public:
     void addPoint (const Vect point);
 
     friend Box operator+ (const Box &a, const Box &b);
-    //friend Box operator* (const Box &a, const Box &b);
+    friend Box operator* (const Box &a, const Box &b);
 
 private:
     Vect m_minVertex, m_maxVertex;
@@ -31,7 +31,7 @@ private:
 };
 
 Box operator+ (const Box &a, const Box &b); // Union
-//Box operator* (const Box &a, const Box &b); // Intersection (TODO)
+Box operator* (const Box &a, const Box &b); // Intersection
 
 
 #endif // BOX_HPP

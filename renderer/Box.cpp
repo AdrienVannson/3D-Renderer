@@ -14,7 +14,7 @@ Box::Box (const Vect minVertex, const Vect maxVertex) :
     m_isEmpty (false)
 {}
 
-bool Box::isEmtpy () const
+bool Box::isEmpty () const
 {
     return m_isEmpty;
 }
@@ -65,8 +65,8 @@ void Box::addPoint (const Vect point)
 
 Box operator+ (const Box &a, const Box &b)
 {
-    if (a.isEmtpy()) return b;
-    if (b.isEmtpy()) return a;
+    if (a.m_isEmpty) return b;
+    if (b.m_isEmpty) return a;
 
     Vect minVertex, maxVertex;
 
@@ -76,4 +76,20 @@ Box operator+ (const Box &a, const Box &b)
     }
 
     return Box (minVertex, maxVertex);
+}
+
+Box operator* (const Box &a, const Box &b)
+{
+    if (a.m_isEmpty || b.m_isEmpty) return Box ();
+
+    Box res;
+
+    for (int i=0; i<3; i++) {
+        res.m_minVertex[i] = std::max(a.m_minVertex[i], b.m_minVertex[i]);
+        res.m_maxVertex[i] = std::min(a.m_maxVertex[i], b.m_maxVertex[i]);
+
+        if (res.m_maxVertex[i] < res.m_minVertex[i]) return Box ();
+    }
+
+    return res;
 }
