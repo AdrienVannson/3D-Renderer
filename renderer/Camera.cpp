@@ -33,6 +33,8 @@ Color Camera::color (const int x, const int y, const int remainingDepth) const
 
 Image* Camera::image () const
 {
+    m_scene->initRender();
+
     Image *image = new Image (m_width, m_height);
 
     for (int x=0; x<m_width; x++) {

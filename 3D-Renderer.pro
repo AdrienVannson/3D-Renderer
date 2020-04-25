@@ -26,12 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+    renderer/AccelerationStructure.cpp \
     renderer/Box.cpp \
     renderer/Image.cpp \
     renderer/Scene.cpp \
     renderer/Camera.cpp \
     renderer/Vect.cpp \
     renderer/Color.cpp \
+    renderer/acceleration-structures/SlowIntersection.cpp \
     renderer/objects/implicit-objects/ImplicitObject.cpp \
     renderer/Object.cpp \
     renderer/Ray.cpp \
@@ -51,12 +53,14 @@ SOURCES += \
     scenes/torus_knot.cpp
 
 HEADERS += \
+    renderer/AccelerationStructure.hpp \
     renderer/Box.hpp \
     renderer/Image.hpp \
     renderer/Scene.hpp \
     renderer/Camera.hpp \
     renderer/Vect.hpp \
     renderer/Color.hpp \
+    renderer/acceleration-structures/SlowIntersection.hpp \
     renderer/objects/implicit-objects/ImplicitObject.hpp \
     renderer/Object.hpp \
     renderer/Ray.hpp \

@@ -2,11 +2,13 @@
 
 #include "Scene.hpp"
 #include "objects/Triangle.hpp"
+#include "renderer/acceleration-structures/SlowIntersection.hpp"
 
 using namespace std;
 
 
 Scene::Scene () :
+    m_accelerationStructure (new SlowIntersection),
     m_backgroundColor (Color(80, 80, 80))
 {
     m_camera = new Camera (this);
@@ -14,6 +16,7 @@ Scene::Scene () :
 
 Scene::~Scene ()
 {
+    delete m_accelerationStructure;
     delete m_camera;
 
     for (Object *object : m_objects) {
@@ -23,43 +26,6 @@ Scene::~Scene ()
     for (Light *light : m_lights) {
         delete light;
     }
-}
-
-double Scene::collisionDate (const Ray &ray) const
-{
-    double minCollisionDate = INFINITY;
-
-    for (Object *object : m_objects) {
-        minCollisionDate = min(object->collisionDate(ray), minCollisionDate);
-    }
-
-    return minCollisionDate;
-}
-
-Color Scene::color (const Ray &ray, const int remainingDepth) const
-{
-    if (remainingDepth == 0) {
-        return m_backgroundColor;
-    }
-
-    Object *object = 0;
-    double minCollisionDate = INFINITY;
-
-    // Select nearest object
-    for (Object *currentObject : m_objects) {
-        const double collisionDate = currentObject->collisionDate(ray);
-
-        if (collisionDate < minCollisionDate) {
-            minCollisionDate = collisionDate;
-            object = currentObject;
-        }
-    }
-
-    if (isinf(minCollisionDate)) {
-        return m_backgroundColor;
-    }
-
-    return object->color(ray, remainingDepth);
 }
 
 void Scene::load (QString filename, const std::vector<Material> &materials)
@@ -122,4 +88,31 @@ void Scene::load (QString filename, const std::vector<Material> &materials)
     }
 
     addObject(group);
+}
+
+
+/*
+ * Rendering
+ */
+
+void Scene::initRender ()
+{
+    m_accelerationStructure->init(m_objects);
+}
+
+double Scene::collisionDate (const Ray &ray) const
+{
+    Object *object = m_accelerationStructure->getObjectIntersecting(ray);
+    return object == 0 ? INFINITY : object->collisionDate(ray);
+}
+
+Color Scene::color (const Ray &ray, const int remainingDepth) const
+{
+    if (remainingDepth == 0) {
+        return m_backgroundColor;
+    }
+
+    Object *object = m_accelerationStructure->getObjectIntersecting(ray);
+
+    return object == 0 ? m_backgroundColor : object->color(ray, remainingDepth);
 }
