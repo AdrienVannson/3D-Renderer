@@ -1,14 +1,14 @@
-#ifndef OCTTREE_HPP
-#define OCTTREE_HPP
+#ifndef OCTREE_HPP
+#define OCTREE_HPP
 
 #include "../AccelerationStructure.hpp"
 
 
-class OctTree : public AccelerationStructure
+class Octree : public AccelerationStructure
 {
 public:
-    OctTree ();
-    virtual ~OctTree ();
+    Octree ();
+    virtual ~Octree ();
 
     virtual void init (const std::vector<Object*> &objects) override;
 
@@ -22,4 +22,4 @@ private:
     Node *m_root;
 };
 
-#endif // OCTTREE_HPP
+#endif // OCTREE_HPP

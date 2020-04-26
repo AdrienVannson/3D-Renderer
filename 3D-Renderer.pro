@@ -33,7 +33,7 @@ SOURCES += \
     renderer/Camera.cpp \
     renderer/Vect.cpp \
     renderer/Color.cpp \
-    renderer/acceleration-structures/OctTree.cpp \
+    renderer/acceleration-structures/Octree.cpp \
     renderer/acceleration-structures/SlowIntersection.cpp \
     renderer/objects/implicit-objects/ImplicitObject.cpp \
     renderer/Object.cpp \
@@ -61,7 +61,7 @@ HEADERS += \
     renderer/Camera.hpp \
     renderer/Vect.hpp \
     renderer/Color.hpp \
-    renderer/acceleration-structures/OctTree.hpp \
+    renderer/acceleration-structures/Octree.hpp \
     renderer/acceleration-structures/SlowIntersection.hpp \
     renderer/objects/implicit-objects/ImplicitObject.hpp \
     renderer/Object.hpp \

@@ -1,6 +1,6 @@
-#include "OctTree.hpp"
+#include "Octree.hpp"
 
-struct OctTree::Node
+struct Octree::Node
 {
     Node ();
     ~Node ();
@@ -15,15 +15,15 @@ struct OctTree::Node
 };
 
 
-OctTree::OctTree ()
+Octree::Octree ()
 {}
 
-OctTree::~OctTree ()
+Octree::~Octree ()
 {
     delete m_root;
 }
 
-void OctTree::init (const std::vector<Object*> &objects)
+void Octree::init (const std::vector<Object*> &objects)
 {
     delete m_root;
     m_root = new Node;
@@ -34,12 +34,12 @@ void OctTree::init (const std::vector<Object*> &objects)
     m_root->createChildren(3);
 }
 
-Object* OctTree::getObjectIntersecting (const Ray ray)
+Object* Octree::getObjectIntersecting (const Ray ray)
 {
     return getObjectIntersecting(ray, m_root);
 }
 
-Object* OctTree::getObjectIntersecting (const Ray &ray, const Node *node)
+Object* Octree::getObjectIntersecting (const Ray &ray, const Node *node)
 {
     if (node->box.collisionDate(ray) == INFINITY) {
         return 0;
@@ -80,19 +80,19 @@ Object* OctTree::getObjectIntersecting (const Ray &ray, const Node *node)
  * Node
  */
 
-OctTree::Node::Node ()
+Octree::Node::Node ()
 {
     for (int i=0; i<8; i++) children[i] = 0;
 }
 
-OctTree::Node::~Node ()
+Octree::Node::~Node ()
 {
     for (int i=0; i<8; i++) {
         delete children[i];
     }
 }
 
-void OctTree::Node::createChildren (const int remainingDepth)
+void Octree::Node::createChildren (const int remainingDepth)
 {
     if (remainingDepth == 0) return;
     if (objects.size() < 300) return; // TODO : change
@@ -133,7 +133,7 @@ void OctTree::Node::createChildren (const int remainingDepth)
     }
 }
 
-void OctTree::Node::updateBox ()
+void Octree::Node::updateBox ()
 {
     box.reset();
     for (Object *object : objects) {
