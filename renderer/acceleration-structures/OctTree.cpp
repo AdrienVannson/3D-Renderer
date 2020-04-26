@@ -5,7 +5,7 @@ struct OctTree::Node
     Node ();
     ~Node ();
 
-    void createChildren ();
+    void createChildren (const int remainingDepth);
     void updateBox ();
 
     Node* children[8];
@@ -31,7 +31,7 @@ void OctTree::init (const std::vector<Object*> &objects)
     m_root->objects = objects;
     m_root->updateBox();
 
-    m_root->createChildren();
+    m_root->createChildren(3);
 }
 
 Object* OctTree::getObjectIntersecting (const Ray ray)
@@ -92,9 +92,10 @@ OctTree::Node::~Node ()
     }
 }
 
-void OctTree::Node::createChildren ()
+void OctTree::Node::createChildren (const int remainingDepth)
 {
-    if (objects.empty()) return;
+    if (remainingDepth == 0) return;
+    if (objects.size() < 300) return; // TODO : change
 
     for (int i=0; i<8; i++) {
         children[i] = new Node;
@@ -126,6 +127,10 @@ void OctTree::Node::createChildren ()
     }
 
     objects.clear();
+
+    for (int child=0; child<8; child++) {
+        children[child]->createChildren(remainingDepth-1);
+    }
 }
 
 void OctTree::Node::updateBox ()
