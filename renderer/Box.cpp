@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include "Box.hpp"
+#include "objects/Triangle.hpp"
 
 Box::Box () :
     m_minVertex (),
@@ -61,6 +62,37 @@ void Box::addPoint (const Vect point)
             m_maxVertex[i] = std::max(m_maxVertex[i], point[i]);
         }
     }
+}
+
+double Box::collisionDate (const Ray &ray) const
+{
+    // Doesn't work when the ray starts in the box
+    // TODO : optimize
+
+    double date = INFINITY;
+
+    const Vect t = m_maxVertex - m_minVertex;
+
+    Vect vertex[8];
+    vertex[0] = m_minVertex + Vect (0, 0, 0);
+    vertex[1] = m_minVertex + Vect (0, 0, t.z());
+    vertex[2] = m_minVertex + Vect (0, t.y(), 0);
+    vertex[3] = m_minVertex + Vect (0, t.y(), t.z());
+    vertex[4] = m_minVertex + Vect (t.x(), 0, 0);
+    vertex[5] = m_minVertex + Vect (t.x(), 0, t.z());
+    vertex[6] = m_minVertex + Vect (t.x(), t.y(), 0);
+    vertex[7] = m_minVertex + Vect (t.x(), t.y(), t.z());
+
+    for (int a=0; a<8; a++) {
+        for (int b=a+1; b<8; b++) {
+            for (int c=b+1; c<8; c++) {
+                Triangle triangle (0, vertex[a], vertex[b], vertex[c]);
+                date = std::min(triangle.collisionDate(ray), date);
+            }
+        }
+    }
+
+    return date;
 }
 
 Box operator+ (const Box &a, const Box &b)

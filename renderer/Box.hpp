@@ -1,6 +1,7 @@
 #ifndef BOX_HPP
 #define BOX_HPP
 
+#include "Ray.hpp"
 #include "Vect.hpp"
 
 
@@ -21,6 +22,8 @@ public:
     void setMaxVertex (const Vect vertex);
 
     void addPoint (const Vect point);
+
+    double collisionDate (const Ray &ray) const;
 
     friend Box operator+ (const Box &a, const Box &b);
     friend Box operator* (const Box &a, const Box &b);
