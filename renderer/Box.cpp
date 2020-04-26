@@ -82,14 +82,14 @@ Box operator* (const Box &a, const Box &b)
 {
     if (a.m_isEmpty || b.m_isEmpty) return Box ();
 
-    Box res;
+    Vect minVertex, maxVertex;
 
     for (int i=0; i<3; i++) {
-        res.m_minVertex[i] = std::max(a.m_minVertex[i], b.m_minVertex[i]);
-        res.m_maxVertex[i] = std::min(a.m_maxVertex[i], b.m_maxVertex[i]);
+        minVertex[i] = std::max(a.m_minVertex[i], b.m_minVertex[i]);
+        maxVertex[i] = std::min(a.m_maxVertex[i], b.m_maxVertex[i]);
 
-        if (res.m_maxVertex[i] < res.m_minVertex[i]) return Box ();
+        if (maxVertex[i] < minVertex[i]) return Box ();
     }
 
-    return res;
+    return Box(minVertex, maxVertex);
 }
