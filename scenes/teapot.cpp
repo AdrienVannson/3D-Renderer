@@ -1,8 +1,11 @@
 #include "teapot.hpp"
 
+#include "renderer/acceleration-structures/Octree.hpp"
+
 Image* generateImageTeapot ()
 {
     Scene *scene = new Scene;
+    scene->setAccelerationStructure(new Octree);
 
     scene->load(":/resources/teapot.obj");
 
