@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-using namespace std;
 
 struct Octree::Node
 {
@@ -62,13 +61,13 @@ Object* Octree::getObjectIntersecting (const Ray &ray, const Node *node)
     }
 
     if (node->children[0]) {
-        vector<pair<double, int>> intersectionChildren;
+        std::vector<std::pair<double, int>> intersectionChildren;
         for (int child=0; child<8; child++) {
-            intersectionChildren.push_back(make_pair(node->children[child]->box.collisionDate(ray), child));
+            intersectionChildren.push_back(std::make_pair(node->children[child]->box.collisionDate(ray), child));
         }
         std::sort(intersectionChildren.begin(), intersectionChildren.end());
 
-        for (pair<double, int> p : intersectionChildren) {
+        for (std::pair<double, int> p : intersectionChildren) {
             Object *obj = getObjectIntersecting(ray, node->children[p.second]);
 
             if (p.first == INFINITY) break;
