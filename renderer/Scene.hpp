@@ -35,8 +35,9 @@ public:
         m_accelerationStructure = accelerationStructure;
     }
 
-    inline const std::vector<Object*>& objects () const { return m_objects; }
-    inline void addObject (Object *object) { m_objects.push_back(object); }
+    inline Object *sceneRoot () { return m_root; }
+
+    inline void addObject (Object *object) { m_root->addObject(object); }
 
     inline const std::vector<Light*>& lights () const { return m_lights; }
     inline void addLight (Light *light) { m_lights.push_back(light); }
@@ -56,7 +57,7 @@ private:
 
     Camera *m_camera;
 
-    std::vector<Object*> m_objects;
+    Group *m_root;
     std::vector<Light*> m_lights;
 
     Color m_backgroundColor;

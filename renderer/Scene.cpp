@@ -12,21 +12,24 @@ Scene::Scene () :
     m_backgroundColor (Color(80, 80, 80))
 {
     m_camera = new Camera (this);
+    m_root = new Group (this);
 }
 
 Scene::~Scene ()
 {
     delete m_accelerationStructure;
     delete m_camera;
-
-    for (Object *object : m_objects) {
-        delete object;
-    }
+    delete m_root;
 
     for (Light *light : m_lights) {
         delete light;
     }
 }
+
+
+/*
+ * Object loading
+ */
 
 void Scene::load (QString filename, const std::vector<Material> &materials)
 {
@@ -97,7 +100,7 @@ void Scene::load (QString filename, const std::vector<Material> &materials)
 
 void Scene::initRender ()
 {
-    m_accelerationStructure->init(m_objects);
+    m_accelerationStructure->init(m_root->objects());
 }
 
 double Scene::collisionDate (const Ray &ray) const
