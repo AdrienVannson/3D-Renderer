@@ -100,7 +100,7 @@ void Scene::load (QString filename, const std::vector<Material> &materials)
 
 void Scene::initRender ()
 {
-    m_accelerationStructure->init(m_root->objects());
+    m_accelerationStructure->init(m_root);
 }
 
 double Scene::collisionDate (const Ray &ray) const

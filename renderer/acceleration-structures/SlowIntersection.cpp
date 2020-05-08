@@ -6,9 +6,9 @@ SlowIntersection::SlowIntersection ()
 SlowIntersection::~SlowIntersection ()
 {}
 
-void SlowIntersection::init (const std::vector<Object*> &objects)
+void SlowIntersection::init (Group *objects)
 {
-    m_objects = objects;
+    m_objects = objects->objects();
 }
 
 Object* SlowIntersection::getObjectIntersecting (const Ray ray)

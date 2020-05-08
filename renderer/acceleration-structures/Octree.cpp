@@ -26,12 +26,12 @@ Octree::~Octree ()
     delete m_root;
 }
 
-void Octree::init (const std::vector<Object*> &objects)
+void Octree::init (Group *objects)
 {
     delete m_root;
     m_root = new Node;
 
-    m_root->objects = objects;
+    m_root->objects = objects->withoutInternGroups()->objects();
     for (Object *object : m_root->objects) {
         m_root->box = m_root->box + object->boundingBox();
     }

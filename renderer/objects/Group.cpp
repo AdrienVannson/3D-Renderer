@@ -9,6 +9,27 @@ Group::Group (Scene *scene) :
 Group::~Group ()
 {}
 
+Group* Group::withoutInternGroups ()
+{
+    Group *root = new Group (m_scene);
+    root->addObjectWithoutInternGroups(this);
+    return root;
+}
+
+void Group::addObjectWithoutInternGroups (Object *object)
+{
+    Group *g = dynamic_cast<Group*>(object);
+
+    if (g == 0) {
+        addObject(object);
+    }
+    else {
+        for (Object *child : g->objects()) {
+            addObjectWithoutInternGroups(child);
+        }
+    }
+}
+
 double Group::collisionDate (const Ray &ray) const
 {
     double minCollisionDate = INFINITY;

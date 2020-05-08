@@ -10,7 +10,7 @@ public:
     Octree ();
     virtual ~Octree ();
 
-    virtual void init (const std::vector<Object*> &objects) override;
+    virtual void init (Group *objects) override;
 
     virtual Object* getObjectIntersecting (const Ray ray) override;
 
