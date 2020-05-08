@@ -1,5 +1,9 @@
 #include "Octree.hpp"
 
+#include <algorithm>
+
+using namespace std;
+
 struct Octree::Node
 {
     Node ();
@@ -29,22 +33,22 @@ void Octree::init (const std::vector<Object*> &objects)
     m_root = new Node;
 
     m_root->objects = objects;
-    m_root->updateBox();
+    for (Object *object : m_root->objects) {
+        m_root->box = m_root->box + object->boundingBox();
+    }
 
     m_root->createChildren(3);
 }
 
 Object* Octree::getObjectIntersecting (const Ray ray)
 {
+    if (m_root->box.collisionDate(ray) == INFINITY) return 0;
+
     return getObjectIntersecting(ray, m_root);
 }
 
 Object* Octree::getObjectIntersecting (const Ray &ray, const Node *node)
 {
-    if (node->box.collisionDate(ray) == INFINITY) {
-        return 0;
-    }
-
     Object *nearestObject = 0;
     double minCollisionDate = INFINITY;
 
@@ -58,16 +62,25 @@ Object* Octree::getObjectIntersecting (const Ray &ray, const Node *node)
     }
 
     if (node->children[0]) {
+        vector<pair<double, int>> intersectionChildren;
         for (int child=0; child<8; child++) {
-            Object *obj = getObjectIntersecting(ray, node->children[child]);
+            intersectionChildren.push_back(make_pair(node->children[child]->box.collisionDate(ray), child));
+        }
+        std::sort(intersectionChildren.begin(), intersectionChildren.end());
 
-            if (obj == 0) continue;
+        for (pair<double, int> p : intersectionChildren) {
+            Object *obj = getObjectIntersecting(ray, node->children[p.second]);
 
-            const double collisionDate = obj->collisionDate(ray);
+            if (p.first == INFINITY) break;
 
-            if (collisionDate < minCollisionDate) {
-                minCollisionDate = collisionDate;
-                nearestObject = obj;
+            if (obj != 0) {
+                const double collisionDate = obj->collisionDate(ray);
+
+                if (collisionDate < minCollisionDate) {
+                    minCollisionDate = collisionDate;
+                    nearestObject = obj;
+                }
+                break;
             }
         }
     }
@@ -119,6 +132,10 @@ void Octree::Node::createChildren (const int remainingDepth)
     // Add objects to children
     for (int child=0; child<8; child++) {
         for (Object *obj : objects) {
+            Box box = obj->boundingBox();
+            box.setMinVertex(box.minVertex() - Vect(1e-6, 1e-6, 1e-6));
+            box.setMaxVertex(box.maxVertex() + Vect(1e-6, 1e-6, 1e-6));
+
             if (! (obj->boundingBox() * children[child]->box) .isEmpty()) {
                 children[child]->objects.push_back(obj);
             }
@@ -135,8 +152,9 @@ void Octree::Node::createChildren (const int remainingDepth)
 
 void Octree::Node::updateBox ()
 {
-    box.reset();
+    Box boundingBox;
     for (Object *object : objects) {
-        box = box + object->boundingBox();
+        boundingBox = boundingBox + object->boundingBox();
     }
+    box = box * boundingBox;
 }
