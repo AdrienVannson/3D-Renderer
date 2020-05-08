@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-
 struct Octree::Node
 {
     Node ();
@@ -131,10 +130,6 @@ void Octree::Node::createChildren (const int remainingDepth)
     // Add objects to children
     for (int child=0; child<8; child++) {
         for (Object *obj : objects) {
-            Box box = obj->boundingBox();
-            box.setMinVertex(box.minVertex() - Vect(1e-6, 1e-6, 1e-6));
-            box.setMaxVertex(box.maxVertex() + Vect(1e-6, 1e-6, 1e-6));
-
             if (! (obj->boundingBox() * children[child]->box) .isEmpty()) {
                 children[child]->objects.push_back(obj);
             }
