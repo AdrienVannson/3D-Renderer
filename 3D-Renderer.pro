@@ -35,6 +35,7 @@ SOURCES += \
     renderer/Color.cpp \
     renderer/acceleration-structures/Octree.cpp \
     renderer/acceleration-structures/SlowIntersection.cpp \
+    renderer/objects/Parallelogram.cpp \
     renderer/objects/implicit-objects/ImplicitObject.cpp \
     renderer/Object.cpp \
     renderer/Ray.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     renderer/Color.hpp \
     renderer/acceleration-structures/Octree.hpp \
     renderer/acceleration-structures/SlowIntersection.hpp \
+    renderer/objects/Parallelogram.hpp \
     renderer/objects/implicit-objects/ImplicitObject.hpp \
     renderer/Object.hpp \
     renderer/Ray.hpp \

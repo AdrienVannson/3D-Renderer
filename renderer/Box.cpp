@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "Box.hpp"
-#include "objects/Triangle.hpp"
+#include "objects/Parallelogram.hpp"
 
 Box::Box () :
     m_minVertex (),
@@ -66,31 +66,47 @@ void Box::addPoint (const Vect point)
 
 double Box::collisionDate (const Ray &ray) const
 {
-    // Doesn't work when the ray starts in the box
-    // TODO : optimize
+    // If the ray starts inside the box
+    if (ray.pos().x() >= m_minVertex.x() && ray.pos().x() <= m_maxVertex.x()
+     && ray.pos().y() >= m_minVertex.y() && ray.pos().y() <= m_maxVertex.y()
+     && ray.pos().z() >= m_minVertex.z() && ray.pos().z() <= m_maxVertex.z()) {
+        return 0;
+    }
 
     double date = INFINITY;
 
     const Vect t = m_maxVertex - m_minVertex;
 
-    Vect vertex[8];
-    vertex[0] = m_minVertex + Vect (0, 0, 0);
-    vertex[1] = m_minVertex + Vect (0, 0, t.z());
-    vertex[2] = m_minVertex + Vect (0, t.y(), 0);
-    vertex[3] = m_minVertex + Vect (0, t.y(), t.z());
-    vertex[4] = m_minVertex + Vect (t.x(), 0, 0);
-    vertex[5] = m_minVertex + Vect (t.x(), 0, t.z());
-    vertex[6] = m_minVertex + Vect (t.x(), t.y(), 0);
-    vertex[7] = m_minVertex + Vect (t.x(), t.y(), t.z());
-
-    for (int a=0; a<8; a++) {
-        for (int b=a+1; b<8; b++) {
-            for (int c=b+1; c<8; c++) {
-                Triangle triangle (0, vertex[a], vertex[b], vertex[c]);
-                date = std::min(triangle.collisionDate(ray), date);
-            }
-        }
-    }
+    date = std::min(date, Parallelogram (0,
+            m_minVertex,
+            m_minVertex + Vect(t.x(), 0, 0),
+            m_minVertex + Vect(0, t.y(), 0)
+    ).collisionDate(ray));
+    date = std::min(date, Parallelogram (0,
+            m_minVertex,
+            m_minVertex + Vect(t.x(), 0, 0),
+            m_minVertex + Vect(0, 0, t.z())
+    ).collisionDate(ray));
+    date = std::min(date, Parallelogram (0,
+            m_minVertex,
+            m_minVertex + Vect(0, t.y(), 0),
+            m_minVertex + Vect(0, 0, t.z())
+    ).collisionDate(ray));
+    date = std::min(date, Parallelogram (0,
+            m_minVertex + Vect(0, t.y(), 0),
+            m_minVertex + Vect(t.x(), t.y(), 0),
+            m_minVertex + Vect(0, t.y(), t.z())
+    ).collisionDate(ray));
+    date = std::min(date, Parallelogram (0,
+            m_minVertex + Vect(0, 0, t.z()),
+            m_minVertex + Vect(t.x(), 0, t.z()),
+            m_minVertex + Vect(0, t.y(), t.z())
+    ).collisionDate(ray));
+    date = std::min(date, Parallelogram (0,
+            m_minVertex + Vect(t.x(), 0, 0),
+            m_minVertex + Vect(t.x(), t.y(), 0),
+            m_minVertex + Vect(t.x(), 0, t.z())
+    ).collisionDate(ray));
 
     return date;
 }
