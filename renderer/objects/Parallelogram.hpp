@@ -26,7 +26,7 @@ public:
     virtual Box boundingBox () const override;
 
 private:
-    // The parallelogram is composed od 4 points : A, B, C and the point opposite A
+    // The parallelogram is composed of 4 points: A, B, C and the point opposite A
     Vect m_A, m_B, m_C;
 };
 
