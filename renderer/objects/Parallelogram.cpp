@@ -12,32 +12,22 @@ Parallelogram::~Parallelogram ()
 
 double Parallelogram::collisionDate (const Ray &ray) const
 {
-    const Vect AB = m_B - m_A;
-    const Vect AC = m_C - m_A;
-    const Vect PA = m_A - ray.pos();
+    const Vect n = (m_B - m_A) ^ (m_C - m_A);
 
-    const Vect n = AB ^ AC;
-
-    const double lambda = (n * PA) / (n * ray.dir());
+    const double lambda = (n * (m_A - ray.pos())) / (n * ray.dir());
 
     if (lambda <= 0) {
         return INFINITY;
     }
 
     const Vect M = ray.pos() + lambda * ray.dir();
+    const Vect D = m_B + m_C - m_A;
 
-    // Check if M is in ABC
-    if ( ((m_B-m_A) ^ (M-m_A)) * ((M-m_A) ^ (m_C-m_A)) >= -1e-9
-      && ((m_A-m_B) ^ (M-m_B)) * ((M-m_B) ^ (m_C-m_B)) >= -1e-9
-      && ((m_A-m_C) ^ (M-m_C)) * ((M-m_C) ^ (m_B-m_C)) >= -1e-9) {
-        return lambda;
-    }
-
-    // Check if M is in the other part of the parallelogram
-    const Vect opA = m_B + m_C - m_A;
-    if ( ((m_B-opA) ^ (M-opA)) * ((M-opA) ^ (m_C-opA)) >= -1e-9
-      && ((opA-m_B) ^ (M-m_B)) * ((M-m_B) ^ (m_C-m_B)) >= -1e-9
-      && ((opA-m_C) ^ (M-m_C)) * ((M-m_C) ^ (m_B-m_C)) >= -1e-9) {
+    // Check if M is in the parallelogram
+    if ( ((m_B-m_A) ^ (M-m_B)) * ((m_B-m_A) ^ (m_C-m_B)) >= 0
+      && ((m_C-m_A) ^ (M-m_C)) * ((m_C-m_A) ^ (m_B-m_C)) >= 0
+      && ((m_B-D) ^ (M-m_B)) * ((m_B-D) ^ (m_C-m_B)) >= 0
+      && ((m_C-D) ^ (M-m_C)) * ((m_C-D) ^ (m_B-m_C)) >= 0) {
         return lambda;
     }
 
