@@ -25,8 +25,12 @@ int main (int argc, char *argv[])
     std::cout << "##### Statistics\n";
     std::cout << std::left  << std::setw(40) << "Ray-triangle tests count:"
               << std::right << std::setw(16) << Stats::rayTriangleTestsCount() << "\n";
-    std::cout << std::left  << std::setw(40) << "Ray-triangle intersection count:"
+    std::cout << std::left  << std::setw(40) << "Ray-triangle intersections count:"
               << std::right << std::setw(16) << Stats::rayTriangleIntersectionsCount() << "\n";
+    std::cout << std::left  << std::setw(40) << "Ray-box tests count:"
+              << std::right << std::setw(16) << Stats::rayBoxTestsCount() << "\n";
+    std::cout << std::left  << std::setw(40) << "Ray-box intersections count:"
+              << std::right << std::setw(16) << Stats::rayBoxIntersectionsCount() << "\n";
     std::cout.flush();
 
     QApplication a(argc, argv);

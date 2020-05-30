@@ -2,6 +2,7 @@
 
 #include "Box.hpp"
 #include "objects/Parallelogram.hpp"
+#include "Stats.hpp"
 
 Box::Box () :
     m_minVertex (),
@@ -66,10 +67,13 @@ void Box::addPoint (const Vect point)
 
 double Box::collisionDate (const Ray &ray) const
 {
+    Stats::addRayBoxTest();
+
     // If the ray starts inside the box
     if (ray.pos().x() >= m_minVertex.x() && ray.pos().x() <= m_maxVertex.x()
      && ray.pos().y() >= m_minVertex.y() && ray.pos().y() <= m_maxVertex.y()
      && ray.pos().z() >= m_minVertex.z() && ray.pos().z() <= m_maxVertex.z()) {
+        Stats::addRayBoxIntersection();
         return 0;
     }
 
@@ -107,6 +111,10 @@ double Box::collisionDate (const Ray &ray) const
             m_minVertex + Vect(t.x(), t.y(), 0),
             m_minVertex + Vect(t.x(), 0, t.z())
     ).collisionDate(ray));
+
+    if (date != INFINITY) {
+        Stats::addRayBoxIntersection();
+    }
 
     return date;
 }
