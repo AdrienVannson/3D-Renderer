@@ -1,5 +1,5 @@
 #include "Triangle.hpp"
-#include "../Scene.hpp"
+#include "renderer/Stats.hpp"
 
 Triangle::Triangle (Scene *scene, const Vect &A, const Vect &B, const Vect &C, const Material &material) :
     SolidObject (scene, material),
@@ -14,6 +14,8 @@ Triangle::~Triangle ()
 
 double Triangle::collisionDate (const Ray &ray) const
 {
+    Stats::addRayTriangleTest();
+
     const Vect AB = m_B - m_A;
     const Vect AC = m_C - m_A;
     const Vect PA = m_A - ray.pos();
@@ -32,6 +34,7 @@ double Triangle::collisionDate (const Ray &ray) const
     if ( ((m_B-m_A) ^ (M-m_A)) * ((M-m_A) ^ (m_C-m_A)) >= -1e-9
       && ((m_A-m_B) ^ (M-m_B)) * ((M-m_B) ^ (m_C-m_B)) >= -1e-9
       && ((m_A-m_C) ^ (M-m_C)) * ((M-m_C) ^ (m_B-m_C)) >= -1e-9) {
+        Stats::addRayTriangleIntersection();
         return lambda;
     }
 

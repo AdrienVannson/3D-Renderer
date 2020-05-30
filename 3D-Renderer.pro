@@ -31,6 +31,7 @@ SOURCES += \
     renderer/Image.cpp \
     renderer/Scene.cpp \
     renderer/Camera.cpp \
+    renderer/Stats.cpp \
     renderer/Vect.cpp \
     renderer/Color.cpp \
     renderer/acceleration-structures/Octree.cpp \
@@ -60,6 +61,7 @@ HEADERS += \
     renderer/Image.hpp \
     renderer/Scene.hpp \
     renderer/Camera.hpp \
+    renderer/Stats.hpp \
     renderer/Vect.hpp \
     renderer/Color.hpp \
     renderer/acceleration-structures/Octree.hpp \
