@@ -65,6 +65,30 @@ void Box::addPoint (const Vect point)
     }
 }
 
+double getCollisitionDateParallelogram (const Ray &ray, const Vect A, const Vect B, const Vect C)
+{
+    const Vect n = (B-A) ^ (C-A);
+
+    const double lambda = (n * (A - ray.pos())) / (n * ray.dir());
+
+    if (lambda <= 0) {
+        return INFINITY;
+    }
+
+    const Vect M = ray.pos() + lambda * ray.dir();
+    const Vect D = B + C - A;
+
+    // Check if M is in the parallelogram
+    if ( ((B-A) ^ (M-B)) * ((B-A) ^ (C-B)) >= 0
+      && ((C-A) ^ (M-C)) * ((C-A) ^ (B-C)) >= 0
+      && ((B-D) ^ (M-B)) * ((B-D) ^ (C-B)) >= 0
+      && ((C-D) ^ (M-C)) * ((C-D) ^ (B-C)) >= 0) {
+        return lambda;
+    }
+
+    return INFINITY;
+}
+
 double Box::collisionDate (const Ray &ray) const
 {
     Stats::addRayBoxTest();
@@ -81,36 +105,36 @@ double Box::collisionDate (const Ray &ray) const
 
     const Vect t = m_maxVertex - m_minVertex;
 
-    date = std::min(date, Parallelogram (0,
+    date = std::min(date, getCollisitionDateParallelogram(ray,
             m_minVertex,
             m_minVertex + Vect(t.x(), 0, 0),
             m_minVertex + Vect(0, t.y(), 0)
-    ).collisionDate(ray));
-    date = std::min(date, Parallelogram (0,
+    ));
+    date = std::min(date, getCollisitionDateParallelogram(ray,
             m_minVertex,
             m_minVertex + Vect(t.x(), 0, 0),
             m_minVertex + Vect(0, 0, t.z())
-    ).collisionDate(ray));
-    date = std::min(date, Parallelogram (0,
+    ));
+    date = std::min(date, getCollisitionDateParallelogram(ray,
             m_minVertex,
             m_minVertex + Vect(0, t.y(), 0),
             m_minVertex + Vect(0, 0, t.z())
-    ).collisionDate(ray));
-    date = std::min(date, Parallelogram (0,
+    ));
+    date = std::min(date, getCollisitionDateParallelogram(ray,
             m_minVertex + Vect(0, t.y(), 0),
             m_minVertex + Vect(t.x(), t.y(), 0),
             m_minVertex + Vect(0, t.y(), t.z())
-    ).collisionDate(ray));
-    date = std::min(date, Parallelogram (0,
+    ));
+    date = std::min(date, getCollisitionDateParallelogram(ray,
             m_minVertex + Vect(0, 0, t.z()),
             m_minVertex + Vect(t.x(), 0, t.z()),
             m_minVertex + Vect(0, t.y(), t.z())
-    ).collisionDate(ray));
-    date = std::min(date, Parallelogram (0,
+    ));
+    date = std::min(date, getCollisitionDateParallelogram(ray,
             m_minVertex + Vect(t.x(), 0, 0),
             m_minVertex + Vect(t.x(), t.y(), 0),
             m_minVertex + Vect(t.x(), 0, t.z())
-    ).collisionDate(ray));
+    ));
 
     if (date != INFINITY) {
         Stats::addRayBoxIntersection();
