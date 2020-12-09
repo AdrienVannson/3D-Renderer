@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    image_utility.cpp \
         main.cpp \
     renderer/AccelerationStructure.cpp \
     renderer/Box.cpp \
@@ -56,6 +57,7 @@ SOURCES += \
     scenes/torus_knot.cpp
 
 HEADERS += \
+    image_utility.hpp \
     renderer/AccelerationStructure.hpp \
     renderer/Box.hpp \
     renderer/Image.hpp \
