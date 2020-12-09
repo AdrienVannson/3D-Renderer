@@ -7,6 +7,7 @@
 #include <iomanip>
 
 #include "renderer/Stats.hpp"
+#include "image_utility.hpp"
 
 // (1) Update to change the scene
 #include "scenes/teapot.hpp"
@@ -14,6 +15,11 @@
 
 int main (int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
+#if 0
+    render();
+#else
     Stats::init();
     const clock_t startTime = clock();
 
@@ -44,26 +50,8 @@ int main (int argc, char *argv[])
 
     std::cout.flush();
 
-    // UI
-    QApplication a(argc, argv);
+    showImage(*image);
+#endif
 
-    // Convert to QImage
-    QImage qimage (image->width(), image->height(), QImage::Format_RGB32);
-    for (int x=0; x<image->width(); x++) {
-        for (int y=0; y<image->height(); y++) {
-            qimage.setPixel(x, image->height()-y-1, image->color(x, y).hex());
-        }
-    }
-
-    // Display the image
-    QMainWindow window;
-    window.setFixedSize(image->width(), image->height());
-
-    QLabel *label = new QLabel;
-    label->setPixmap(QPixmap::fromImage(qimage));
-    window.setCentralWidget(label);
-
-    window.show();
-
-    return a.exec();
+    return app.exec();
 }
