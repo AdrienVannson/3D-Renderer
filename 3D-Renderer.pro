@@ -50,6 +50,7 @@ SOURCES += \
     scenes/monkeys.cpp \
     scenes/profile_picture.cpp \
     scenes/several_lights.cpp \
+    scenes/sphere_animation.cpp \
     scenes/sphere_mirror.cpp \
     scenes/sphere_refraction.cpp \
     scenes/spheres.cpp \
@@ -81,6 +82,7 @@ HEADERS += \
     scenes/monkeys.hpp \
     scenes/profile_picture.hpp \
     scenes/several_lights.hpp \
+    scenes/sphere_animation.hpp \
     scenes/sphere_mirror.hpp \
     scenes/sphere_refraction.hpp \
     scenes/spheres.hpp \
