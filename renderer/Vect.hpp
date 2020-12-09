@@ -73,6 +73,8 @@ public:
     inline void operator+= (const Vect &v) { m_x += v.m_x; m_y += v.m_y; m_z += v.m_z; }
     inline void operator-= (const Vect &v) { m_x -= v.m_x; m_y -= v.m_y; m_z -= v.m_z; }
 
+    static inline double dist (const Vect &a, const Vect &b);
+
 protected:
     double m_x, m_y, m_z;
 };
@@ -96,5 +98,7 @@ inline Vect operator* (const double k, const Vect &v) { return Vect(k*v.x(), k*v
 inline Vect operator* (const Vect &v, const double k) { return Vect(k*v.x(), k*v.y(), k*v.z()); }
 
 inline double dist (const Vect &a, const Vect &b) { return Vect(a-b).norm(); }
+
+inline double Vect::dist (const Vect &a, const Vect &b) { return (a-b).norm(); }
 
 #endif // VECT_HPP
