@@ -26,7 +26,7 @@ Color SolidObject::color (const Ray &ray, const int remainingDepth) const
             Ray nextRay (intersection, toLight);
             nextRay.moveByEpsilon();
 
-            if (m_scene->collisionDate(nextRay) >= dist(intersection, m_scene->lights()[0]->pos())) {
+            if (m_scene->collisionDate(nextRay) >= Vect::dist(intersection, m_scene->lights()[0]->pos())) {
                 Color color (dotProduct * m_material.color().red(),
                              dotProduct * m_material.color().green(),
                              dotProduct * m_material.color().blue());
