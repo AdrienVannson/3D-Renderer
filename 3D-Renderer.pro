@@ -54,6 +54,7 @@ SOURCES += \
     scenes/sphere_mirror.cpp \
     scenes/sphere_refraction.cpp \
     scenes/spheres.cpp \
+    scenes/spheres_collisions.cpp \
     scenes/teapot.cpp \
     scenes/torus_knot.cpp
 
@@ -86,6 +87,7 @@ HEADERS += \
     scenes/sphere_mirror.hpp \
     scenes/sphere_refraction.hpp \
     scenes/spheres.hpp \
+    scenes/spheres_collisions.hpp \
     scenes/teapot.hpp \
     scenes/torus_knot.hpp
 
