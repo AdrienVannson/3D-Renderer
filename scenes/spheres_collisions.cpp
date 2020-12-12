@@ -106,11 +106,43 @@ Collision* nextCollision ()
 
         if (s.m_velocity.z() >= -1e-3) continue;
 
-        double time = -z / s.m_velocity.z();
+        double date = -z / s.m_velocity.z();
 
-        if (!next || time < next->m_date) {
+        if (!next || date < next->m_date) {
             delete next;
-            next = new CollisionWall(&s, time);
+            next = new CollisionWall(&s, date);
+        }
+    }
+
+    // Collisions between spheres
+    for (int i=0; i<(int)spheres.size(); i++) {
+        for (int j=i+1; j<(int)spheres.size(); j++) {
+            DynamicSphere &s1 = spheres[i];
+            DynamicSphere &s2 = spheres[j];
+            const double r = s1.m_sphere->radius() + s2.m_sphere->radius();
+
+            const double x = s2.m_sphere->center().x() - s1.m_sphere->center().x();
+            const double y = s2.m_sphere->center().y() - s1.m_sphere->center().y();
+            const double z = s2.m_sphere->center().z() - s1.m_sphere->center().z();
+
+            const double vx = s2.m_velocity.x() - s1.m_velocity.x();
+            const double vy = s2.m_velocity.y() - s1.m_velocity.y();
+            const double vz = s2.m_velocity.z() - s1.m_velocity.z();
+
+            const double a = vx*vx + vy*vy + vz*vz;
+            const double b = x*vx + y*vy + z*vz;
+            const double c = x*x + y*y + z*z - r*r;
+
+            const double delta = b*b - a*c;
+
+            if (a > 1e-4 && delta > 1e-4) {
+                const double date = (-b - std::sqrt(delta)) / a;
+
+                if (date >= 0 && (!next || date < next->m_date)) {
+                    delete next;
+                    next = new CollisionSphere(&s1, &s2, date);
+                }
+            }
         }
     }
 
