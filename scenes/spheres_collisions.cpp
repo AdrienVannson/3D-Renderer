@@ -20,16 +20,63 @@ struct DynamicSphere
     double m_mass;
 };
 
-struct Collision
+class Collision
 {
-    Collision (DynamicSphere *s1, DynamicSphere *s2, const double date) :
-        m_date(date),
+public:
+    Collision (const double date) :
+        m_date(date)
+    {}
+    virtual ~Collision () {}
+
+    virtual void apply () = 0;
+
+    double m_date; // Time remaining before the collision happens
+};
+
+class CollisionWall : public Collision
+{
+public:
+    CollisionWall (DynamicSphere *s, const double date) :
+        Collision(date),
+        m_s(s)
+    {}
+    virtual ~CollisionWall () {}
+
+    virtual void apply () override
+    {
+        m_s->m_velocity.setZ(-m_s->m_velocity.z());
+    }
+
+private:
+    DynamicSphere *m_s;
+};
+
+class CollisionSphere : public Collision
+{
+public:
+    CollisionSphere (DynamicSphere *s1, DynamicSphere *s2, const double date) :
+        Collision(date),
         m_s1(s1),
         m_s2(s2)
     {}
+    virtual ~CollisionSphere () {}
 
-    double m_date; // Time remaining before the collision happens
-    DynamicSphere *m_s1, *m_s2; // If m_s2 = 0: collision with the floor
+    virtual void apply () override
+    {
+        apply(m_s1, m_s2);
+        apply(m_s2, m_s1);
+    }
+
+private:
+    DynamicSphere *m_s1, *m_s2;
+
+    static void apply (DynamicSphere *a, DynamicSphere *b)
+    {
+        Vect u = a->m_sphere->center() - b->m_sphere->center();
+        u.normalize();
+
+        b->m_velocity = b->m_velocity - 2.*(b->m_velocity * u)*u;
+    }
 };
 
 Scene *scene;
@@ -38,7 +85,7 @@ std::vector<DynamicSphere> spheres;
 void moveSpheres (const double t) // t: duration
 {
     for (DynamicSphere &s : spheres) {
-        s.m_sphere->setCenter(s.m_sphere->center() + t * s.m_velocity);
+        s.m_sphere->setCenter(s.m_sphere->center() + t*s.m_velocity);
     }
 }
 
@@ -49,40 +96,25 @@ void updateVelocities (const double t) // t: duration
     }
 }
 
-std::vector<Collision> generateCollisions ()
+Collision* nextCollision ()
 {
-    std::vector<Collision> collisions;
+    Collision *next = 0;
 
     // Collisions with the floor
     for (DynamicSphere &s : spheres) {
         const double z = s.m_sphere->center().z() - s.m_sphere->radius();
 
-        if (z > 0 && s.m_velocity.z() < -1e-3) {
-            collisions.push_back(Collision(&s, 0, -z / s.m_velocity.z()));
-        }
-    }
+        if (s.m_velocity.z() >= -1e-3) continue;
 
-    return collisions;
-}
+        double time = -z / s.m_velocity.z();
 
-Collision nextCollision ()
-{
-    Collision next(0, 0, INFINITY);
-
-    for (Collision &c : generateCollisions()) {
-        if (c.m_date < next.m_date) {
-            next = c;
+        if (!next || time < next->m_date) {
+            delete next;
+            next = new CollisionWall(&s, time);
         }
     }
 
     return next;
-}
-
-void applyCollision (const Collision &c)
-{
-    if (c.m_s2 == 0) { // Collision with the floor
-        c.m_s1->m_velocity.setZ(-c.m_s1->m_velocity.z());
-    }
 }
 
 void nextFrame (double duration)
@@ -92,20 +124,22 @@ void nextFrame (double duration)
     while (duration > 1e-4) {
         double step = std::min(stepMax, duration);
 
-        const Collision c = nextCollision();
+        Collision *c = nextCollision();
 
-        if (c.m_date > step) {
+        if (!c || c->m_date > step) {
             moveSpheres(step);
             updateVelocities(step);
             duration -= step;
         }
         else {
-            moveSpheres(c.m_date);
-            applyCollision(c);
-            updateVelocities(c.m_date);
+            moveSpheres(std::max(c->m_date, 0.));
+            c->apply();
+            updateVelocities(std::max(c->m_date, 0.));
 
-            duration -= c.m_date;
+            duration -= std::max(c->m_date, 0.);
         }
+
+        delete c;
     }
 }
 
@@ -129,9 +163,13 @@ void renderSpheresCollision ()
     scene->addObject(sol);
 
     // Spheres
-    Sphere *sphere = new Sphere(scene, Vect(-6,0,4), 1, Material(Color(255,0,0)));
-    scene->addObject(sphere);
-    spheres.push_back(DynamicSphere(sphere, Vect(2,0,0)));
+    Sphere *sphere1 = new Sphere(scene, Vect(-6,0,4), 1, Material(Color(255,0,0)));
+    scene->addObject(sphere1);
+    spheres.push_back(DynamicSphere(sphere1, Vect(2,0,0)));
+
+    Sphere *sphere2 = new Sphere(scene, Vect(6,0,3), 1, Material(Color(0,0,255)));
+    scene->addObject(sphere2);
+    spheres.push_back(DynamicSphere(sphere2, Vect(-2,0,0)));
 
     // Simulation
     for (int i=0; i<8*32; i++) {
@@ -147,4 +185,7 @@ void renderSpheresCollision ()
     }
 
     exit(0);
+
+    // To create a video:
+    // ffmpeg -framerate 32 -i %03d.png -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
 }
