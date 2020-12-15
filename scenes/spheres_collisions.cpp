@@ -36,19 +36,28 @@ public:
 class CollisionWall : public Collision
 {
 public:
-    CollisionWall (DynamicSphere *s, const double date) :
+    CollisionWall (DynamicSphere *s, const int c, const double date) :
         Collision(date),
-        m_s(s)
+        m_s(s),
+        m_c(c)
     {}
     virtual ~CollisionWall () {}
 
     virtual void apply () override
     {
-        m_s->m_velocity.setZ(-m_s->m_velocity.z());
+        const double a = (*m_s).m_velocity[m_c];
+
+        (*m_s).m_velocity[m_c] *= -1;
+
+        if (-a != (*m_s).m_velocity[m_c]) {
+            std::cerr << a << " " << (*m_s).m_velocity[m_c] << std::endl;
+            exit(0);
+        }
     }
 
 private:
     DynamicSphere *m_s;
+    int m_c;
 };
 
 class CollisionSphere : public Collision
@@ -102,15 +111,38 @@ Collision* nextCollision ()
 
     // Collisions with the floor
     for (DynamicSphere &s : spheres) {
-        const double z = s.m_sphere->center().z() - s.m_sphere->radius();
 
-        if (s.m_velocity.z() >= -1e-3) continue;
+        if (s.m_velocity.z() < -1e-3) {
+            const double z = s.m_sphere->center().z() - s.m_sphere->radius();
 
-        double date = -z / s.m_velocity.z();
+            double date = -z / s.m_velocity.z();
 
-        if (!next || date < next->m_date) {
-            delete next;
-            next = new CollisionWall(&s, date);
+            if (!next || date < next->m_date) {
+                delete next;
+                next = new CollisionWall(&s, 2, date);
+            }
+        }
+
+        if (abs(s.m_velocity.x()) > 1e-3) {
+            const double d = s.m_velocity.x() > 0 ? 7-s.m_sphere->center().x()-s.m_sphere->radius()
+                                                  : 7+s.m_sphere->center().x()-s.m_sphere->radius();
+            double date = abs(d / s.m_velocity.x());
+
+            if (!next || date < next->m_date) {
+                delete next;
+                next = new CollisionWall(&s, 0, date);
+            }
+        }
+
+        if (abs(s.m_velocity.y()) > 1e-3) {
+            const double d = s.m_velocity.y() > 0 ? 7-s.m_sphere->center().y()-s.m_sphere->radius()
+                                                  : 7+s.m_sphere->center().y()-s.m_sphere->radius();
+            double date = abs(d / s.m_velocity.y());
+
+            if (!next || date < next->m_date) {
+                delete next;
+                next = new CollisionWall(&s, 1, date);
+            }
         }
     }
 
@@ -181,7 +213,7 @@ void renderSpheresCollision ()
     scene = new Scene;
     scene->setBackgroundColor(Color(50, 50, 50));
 
-    scene->addLight(new Light(2*Vect(3, 2, 4)));
+    scene->addLight(new Light(2*Vect(3, 2, 10)));
 
     /*scene->camera()->setWidth(1920);
     scene->camera()->setHeight(1080);*/
@@ -195,25 +227,36 @@ void renderSpheresCollision ()
     scene->addObject(sol);
 
     // Spheres
-    Sphere *sphere1 = new Sphere(scene, Vect(-6,0,4), 1, Material(Color(255,0,0)));
-    scene->addObject(sphere1);
-    spheres.push_back(DynamicSphere(sphere1, Vect(2,0,0)));
+    for (int x=-5; x<=5; x+=5) {
+        for (int y=-5; y<=5; y+=5) {
+            const double c1 = 50 + rand() % 200;
+            const double c2 = 50 + rand() % 200;
+            const double c3 = 50 + rand() % 200;
 
-    Sphere *sphere2 = new Sphere(scene, Vect(6,0,3), 1, Material(Color(0,0,255)));
-    scene->addObject(sphere2);
-    spheres.push_back(DynamicSphere(sphere2, Vect(-2,0,0)));
+            Sphere *sphere = new Sphere(scene, Vect(x,y,4), 1, Material(Color(c1,c2,c3)));
+            scene->addObject(sphere);
+
+            const double vx = (rand() % 200) / 100. - 1;
+            const double vy = (rand() % 200) / 100. - 1;
+            const double vz = (rand() % 200) / 100. - 1;
+
+            spheres.push_back(DynamicSphere(sphere, Vect(vx, vy, vz)));
+        }
+    }
 
     // Simulation
-    for (int i=0; i<8*32; i++) {
+    for (int i=0; i<30*32; i++) {
         Image *image = scene->camera()->image();
 
         std::string filename = std::to_string(i);
-        filename = "output/" + std::string(3 - filename.length(), '0') + filename + ".png";
+        filename = "output/" + std::string(4 - filename.length(), '0') + filename + ".png";
 
         saveImage(*image, filename);
         //showImage(*image);
 
         nextFrame(1. / 32.); // 32 fps
+
+        delete image;
     }
 
     exit(0);
