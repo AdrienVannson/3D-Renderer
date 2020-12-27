@@ -258,22 +258,30 @@ void renderSpheresCollision ()
     }
 
     // Simulation
-    for (int i=0; i<30*32; i++) {
-        Image *image = scene->camera()->image();
+    for (int i=0; i<60*60; i++) { // 60s, 60fps
+        const int process = 0; // Update to render different parts of the animation
 
-        std::string filename = std::to_string(i);
-        filename = "output/" + std::string(4 - filename.length(), '0') + filename + ".png";
+        if ( (process == 0 && i < 15*60)
+          || (process == 1 && i >= 15*60 && i < 30*60)
+          || (process == 2 && i >= 30*60 && i < 45*60)
+          || (process == 3 && i >= 45*60) ) {
+            Image *image = scene->camera()->image();
 
-        saveImage(*image, filename);
-        //showImage(*image);
+            std::string filename = std::to_string(i);
+            filename = "output" + std::to_string(process) + "/"
+                     + std::string(4 - filename.length(), '0') + filename + ".png";
 
-        nextFrame(1. / 32.); // 32 fps
+            saveImage(*image, filename);
+            //showImage(*image);
 
-        delete image;
+            delete image;
+        }
+
+        nextFrame(1. / 60.); // 60 fps
     }
 
     exit(0);
 
     // To create a video:
-    // ffmpeg -framerate 32 -i %03d.png -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
+    // ffmpeg -framerate 60 -i %04d.png -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p output.mp4
 }
