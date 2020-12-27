@@ -213,18 +213,31 @@ void renderSpheresCollision ()
     scene = new Scene;
     scene->setBackgroundColor(Color(50, 50, 50));
 
-    scene->addLight(new Light(2*Vect(3, 2, 10)));
+    scene->addLight(new Light(Vect(4, 3, 20), 1));
 
-    /*scene->camera()->setWidth(1920);
-    scene->camera()->setHeight(1080);*/
+#if 1
+    scene->camera()->setWidth(1920);
+    scene->camera()->setHeight(1080);
+#endif
 
     scene->camera()->setPos(2.5*Vect(14, 14, 6.8));
     scene->camera()->setDir(Vect(-3, -3, -1.5));
 
-    // Sol
+    // Floor
     double l = 10;
-    Parallelogram *sol = new Parallelogram(scene, Vect(-l,-l), Vect(l,-l), Vect(-l,l), Material(Color(255,255,255)));
-    scene->addObject(sol);
+    double d = 7;
+    Parallelogram *floor = new Parallelogram(scene, Vect(-l,-l), Vect(l,-l), Vect(-l,l),
+                                             Material(Color(244,143,177), 0.07));
+    scene->addObject(floor);
+
+    // Walls
+    Parallelogram *wall1 = new Parallelogram(scene, Vect(-l,-d), Vect(-l,-d,5), Vect(l,-d),
+                                             Material(Color(244,143,177), 0.07));
+    scene->addObject(wall1);
+
+    Parallelogram *wall2 = new Parallelogram(scene, Vect(-d,-l), Vect(-d,l), Vect(-d,-l,5),
+                                             Material(Color(244,143,177), 0.07));
+    scene->addObject(wall2);
 
     // Spheres
     for (int x=-5; x<=5; x+=5) {
@@ -233,7 +246,7 @@ void renderSpheresCollision ()
             const double c2 = 50 + rand() % 200;
             const double c3 = 50 + rand() % 200;
 
-            Sphere *sphere = new Sphere(scene, Vect(x,y,4), 1, Material(Color(c1,c2,c3)));
+            Sphere *sphere = new Sphere(scene, Vect(x,y,4), 1, Material(Color(c1,c2,c3), 0.12));
             scene->addObject(sphere);
 
             const double vx = (rand() % 200) / 100. - 1;
