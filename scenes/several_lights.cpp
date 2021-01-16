@@ -10,7 +10,7 @@ Image* generateImageSeveralLights ()
              Material(Color(50, 50, 50))
     });
 
-    scene->addObject(new Sphere(scene, Vect(0, 0, 3), 2, Material(Color(255, 0, 0))));
+    scene->addObject(new Sphere(Vect(0, 0, 3), 2, Material(Color(255, 0, 0))));
 
     scene->addLight(new Light(Vect(0, 50, 150), 0.5));
     scene->addLight(new Light(Vect(0, -50, 150), 0.5));

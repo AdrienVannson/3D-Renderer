@@ -14,7 +14,7 @@ Image* generateImageSphereMirror ()
             Material(Color(0, 0, 0))
     });
 
-    scene->addObject(new Sphere(scene, Vect(8, 8, 4), 4, Material(Color(0, 0, 0), 1)));
+    scene->addObject(new Sphere(Vect(8, 8, 4), 4, Material(Color(0, 0, 0), 1)));
 
     scene->addLight(new Light(5*Vect(8, 20, 12)));
 
