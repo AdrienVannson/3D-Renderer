@@ -12,16 +12,16 @@ Image* generateImageSpheresRefraction ()
              Material(Color(0, 0, 255))
     });
 
-    Material material (Color(50, 50, 50));
+    Material material(Color(50, 50, 50));
     material.setRefractionCoef(0.8);
     material.setRefractiveIndex(1.3);
 
-    scene->addObject(new Sphere (scene, Vect(5, 0, 1), 1, material));
+    scene->addObject(new Sphere(Vect(5, 0, 1), 1, material));
 
     scene->addLight(new Light(Vect(6, 2, 5)));
 
-    scene->camera()->setPos( Vect (17, -0.5, 5) );
-    scene->camera()->setDir( Vect (-3, 0.1, -1) );
+    scene->camera()->setPos(Vect(17, -0.5, 5));
+    scene->camera()->setDir(Vect(-3, 0.1, -1));
 
     Image *image = scene->camera()->image();
     delete scene;
