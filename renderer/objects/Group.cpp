@@ -2,8 +2,7 @@
 
 using namespace std;
 
-Group::Group (Scene *scene) :
-    Object (scene)
+Group::Group ()
 {}
 
 Group::~Group ()
@@ -11,7 +10,7 @@ Group::~Group ()
 
 Group* Group::withoutInternGroups ()
 {
-    Group *root = new Group (m_scene);
+    Group *root = new Group ();
     root->addObjectWithoutInternGroups(this);
     return root;
 }
@@ -30,33 +29,21 @@ void Group::addObjectWithoutInternGroups (Object *object)
     }
 }
 
-double Group::collisionDate (const Ray &ray) const
+Object::Collision Group::collision (const Ray &ray) const
 {
-    double minCollisionDate = INFINITY;
-
-    for (Object *currentObject : m_objects) {
-        minCollisionDate = min(currentObject->collisionDate(ray), minCollisionDate);
-    }
-
-    return minCollisionDate;
-}
-
-Color Group::color (const Ray &ray, const int remainingDepth) const
-{
-    Object *object = 0;
-    double minCollisionDate = INFINITY;
+    Collision minCol;
+    minCol.date = INFINITY;
 
     // Select nearest object
     for (Object *currentObject : m_objects) {
-        const double collisionDate = currentObject->collisionDate(ray);
+        Collision col = currentObject->collision(ray);
 
-        if (collisionDate < minCollisionDate) {
-            minCollisionDate = collisionDate;
-            object = currentObject;
+        if (col.date < minCol.date) {
+            minCol = col;
         }
     }
 
-    return object->color(ray, remainingDepth);
+    return minCol;
 }
 
 Box Group::boundingBox() const

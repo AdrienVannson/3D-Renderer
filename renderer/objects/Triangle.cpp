@@ -1,12 +1,11 @@
 #include "Triangle.hpp"
 #include "renderer/Stats.hpp"
 
-Triangle::Triangle (Scene *scene, const Vect &A, const Vect &B, const Vect &C, const Material &material) :
-    SolidObject (scene, material),
-
-    m_A (A),
-    m_B (B),
-    m_C (C)
+Triangle::Triangle (const Vect &A, const Vect &B, const Vect &C, const Material &material) :
+    SolidObject(material),
+    m_A(A),
+    m_B(B),
+    m_C(C)
 {}
 
 Triangle::~Triangle ()
@@ -43,6 +42,15 @@ Vect Triangle::normal (const Vect &pos) const
     Vect normal = (m_B - m_A) ^ (m_C - m_A);
     normal.normalize();
     return normal;
+}
+
+Object::Collision Triangle::collision (const Ray &ray) const
+{
+    Collision col;
+    col.date = collisionDate(ray);
+    col.normal = normal(ray.pos() + col.date*ray.dir());
+    col.material = m_material;
+    return col;
 }
 
 Box Triangle::boundingBox () const

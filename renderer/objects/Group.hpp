@@ -10,7 +10,7 @@
 class Group : public Object
 {
 public:
-    Group (Scene *scene);
+    Group ();
     virtual ~Group ();
 
     inline void addObject (Object *object) { m_objects.push_back(object); }
@@ -21,8 +21,7 @@ public:
     Group* withoutInternGroups ();
     void addObjectWithoutInternGroups (Object *object);
 
-    virtual double collisionDate (const Ray &ray) const override;
-    virtual Color color (const Ray &ray, const int remainingDepth) const override;
+    Collision collision (const Ray &ray) const override;
 
     virtual Box boundingBox() const override;
 

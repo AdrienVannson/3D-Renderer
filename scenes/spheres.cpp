@@ -5,9 +5,9 @@ Image* generateImageSpheres ()
 {
     Scene *scene = new Scene;
 
-    scene->addObject(new Sphere (scene, Vect(-1, 0, 1), 1, Material(Color(255, 0, 0))));
-    scene->addObject(new Sphere (scene, Vect(-1, -2.1, 1), 1, Material(Color(0, 255, 0)))); // Left
-    scene->addObject(new Sphere (scene, Vect(-1, 2.1, 1), 1, Material(Color(0, 0, 255), 0.6))); // Right
+    scene->addObject(new Sphere(Vect(-1, 0, 1), 1, Material(Color(255, 0, 0))));
+    scene->addObject(new Sphere(Vect(-1, -2.1, 1), 1, Material(Color(0, 255, 0)))); // Left
+    scene->addObject(new Sphere(Vect(-1, 2.1, 1), 1, Material(Color(0, 0, 255), 0.6))); // Right
 
     scene->addLight(new Light(Vect(3, 2, 2)));
 

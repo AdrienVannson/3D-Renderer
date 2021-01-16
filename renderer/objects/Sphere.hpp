@@ -10,7 +10,7 @@
 class Sphere : public SolidObject
 {
 public:
-    Sphere (Scene *scene, const Vect &center=Vect(), const double radius=1, const Material &material=Material());
+    Sphere (const Vect &center=Vect(), const double radius=1, const Material &material=Material());
     virtual ~Sphere ();
 
     inline Vect center () const { return m_center; }
@@ -19,8 +19,9 @@ public:
     inline double radius () const { return m_radius; }
     inline void setRadius (const double radius) { m_radius = radius; }
 
-    virtual double collisionDate (const Ray &ray) const override;
-    virtual Vect normal (const Vect &pos) const override;
+    double collisionDate (const Ray &ray) const;
+    Vect normal (const Vect &pos) const;
+    Collision collision (const Ray &ray) const override;
 
     virtual Box boundingBox () const override;
 
