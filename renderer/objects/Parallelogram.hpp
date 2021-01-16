@@ -7,7 +7,7 @@
 class Parallelogram : public SolidObject
 {
 public:
-    Parallelogram (Scene *scene, const Vect &A=Vect(), const Vect &B=Vect(), const Vect &C=Vect(),
+    Parallelogram (const Vect &A=Vect(), const Vect &B=Vect(), const Vect &C=Vect(),
                    const Material &material=Material());
     virtual ~Parallelogram ();
 
@@ -20,8 +20,9 @@ public:
     inline Vect C () const { return m_C; }
     inline void setC (const Vect &C) { m_C = C; }
 
-    virtual double collisionDate (const Ray &ray) const override;
-    virtual Vect normal (const Vect &pos) const override;
+    double collisionDate (const Ray &ray) const;
+    Vect normal (const Vect &pos) const;
+    Collision collision (const Ray &ray) const override;
 
     virtual Box boundingBox () const override;
 
