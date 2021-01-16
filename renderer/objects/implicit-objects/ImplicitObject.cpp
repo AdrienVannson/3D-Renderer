@@ -1,7 +1,6 @@
 #include "ImplicitObject.hpp"
 
-ImplicitObject::ImplicitObject (Scene *scene) :
-    SolidObject (scene)
+ImplicitObject::ImplicitObject ()
 {}
 
 ImplicitObject::~ImplicitObject ()
@@ -37,4 +36,13 @@ Vect ImplicitObject::normal (const Vect &pos) const
 
     normal.normalize();
     return normal;
+}
+
+Object::Collision ImplicitObject::collision (const Ray &ray) const
+{
+    Collision col;
+    col.date = collisionDate(ray);
+    col.normal = normal(ray.pos() + col.date*ray.dir());
+    col.material = m_material;
+    return col;
 }

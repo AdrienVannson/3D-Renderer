@@ -27,7 +27,7 @@ SOURCES += \
     renderer/objects/SolidObject.cpp \
     renderer/objects/Sphere.cpp \
     renderer/objects/Triangle.cpp \
-    #renderer/objects/implicit-objects/ImplicitObject.cpp \
+    renderer/objects/implicit-objects/ImplicitObject.cpp \
     scenes/monkeys.cpp \
     scenes/profile_picture.cpp \
     scenes/several_lights.cpp \
@@ -60,7 +60,7 @@ HEADERS += \
     renderer/objects/SolidObject.hpp \
     renderer/objects/Sphere.hpp \
     renderer/objects/Triangle.hpp \
-    #renderer/objects/implicit-objects/ImplicitObject.hpp \
+    renderer/objects/implicit-objects/ImplicitObject.hpp \
     scenes/monkeys.hpp \
     scenes/profile_picture.hpp \
     scenes/several_lights.hpp \

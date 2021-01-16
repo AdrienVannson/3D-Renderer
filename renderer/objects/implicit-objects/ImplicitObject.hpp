@@ -7,11 +7,12 @@
 class ImplicitObject : public SolidObject
 {
 public:
-    ImplicitObject (Scene *scene);
+    ImplicitObject ();
     virtual ~ImplicitObject ();
 
-    virtual double collisionDate (const Ray &ray) const;
-    virtual Vect normal (const Vect &pos) const;
+    double collisionDate (const Ray &ray) const override;
+    Vect normal (const Vect &pos) const;
+    Collision collision (const Ray &ray) const override;
 
 protected:
     virtual double estimatedDistance (const Vect &pos) const = 0;
