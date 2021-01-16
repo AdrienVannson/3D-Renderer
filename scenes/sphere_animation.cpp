@@ -12,14 +12,13 @@
 class PSphere : public SolidObject
 {
 public:
-    PSphere (Scene *scene, const double p) :
-        SolidObject(scene),
+    PSphere (const double p) :
         m_p (p)
     {}
 
     virtual ~PSphere () {};
 
-    virtual double collisionDate (const Ray &ray) const
+    virtual double collisionDate (const Ray &ray) const override
     {
         // Minimize the distance between O and the ray (trichotomy)
         double a = 0, b = Vect::dist(ray.pos(), Vect(0,0,0)) + 1;
@@ -49,7 +48,7 @@ public:
         return b;
     }
 
-    virtual Vect normal (const Vect &pos) const
+    Vect normal (const Vect &pos) const
     {
         Vect n(pow(abs(pos.x()), m_p) / pos.x(),
                pow(abs(pos.y()), m_p) / pos.y(),
@@ -59,7 +58,16 @@ public:
         return n;
     }
 
-    virtual Box boundingBox () const
+    Object::Collision collision (const Ray &ray) const override
+    {
+        Collision col;
+        col.date = collisionDate(ray);
+        col.normal = normal(ray.pos() + col.date*ray.dir());
+        col.material = m_material;
+        return col;
+    }
+
+    Box boundingBox () const override
     {
         return Box(Vect(-1, -1, -1), Vect(1, 1, 1));
     }
@@ -86,7 +94,7 @@ Image* generateImageSphere (const double p)
     scene->setBackgroundColor(Color(50, 50, 50));
     //scene->setAccelerationStructure(new Octree);
 
-    PSphere *psphere = new PSphere (scene, p);
+    PSphere *psphere = new PSphere(p);
     psphere->setMaterial(Material(Color(255, 0, 0)));
 
     scene->addObject(psphere);
@@ -105,7 +113,7 @@ Image* generateImageSphere (const double p)
 }
 
 
-void render ()
+void renderSphereAnimation ()
 {
     std::vector<double> ps; // Values of p
     ps.push_back(1);
@@ -123,7 +131,7 @@ void render ()
         Image *image = generateImageSphere(p);
 
         std::string filename = std::to_string(i);
-        filename = std::string(3 - filename.length(), '0') + filename + ".png";
+        filename = "output/" + std::string(3 - filename.length(), '0') + filename + ".png";
 
         saveImage(*image, filename);
         //showImage(*image);

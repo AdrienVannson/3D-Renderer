@@ -3,6 +3,6 @@
 
 #include "renderer/Scene.hpp"
 
-void render ();
+void renderSphereAnimation ();
 
 #endif // SPHERE_ANIMATION_HPP
