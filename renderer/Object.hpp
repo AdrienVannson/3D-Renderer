@@ -23,8 +23,8 @@ public:
         Material material;
     };
 
+    virtual double collisionDate (const Ray &ray) const = 0;
     virtual Collision collision (const Ray &ray) const = 0;
-    double collisionDate (const Ray &ray) const; // Deprecated
 
     virtual Box boundingBox () const = 0;
 };

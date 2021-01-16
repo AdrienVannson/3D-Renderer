@@ -20,7 +20,7 @@ public:
     inline Vect C () const { return m_C; }
     inline void setC (const Vect &C) { m_C = C; }
 
-    double collisionDate (const Ray &ray) const;
+    double collisionDate (const Ray &ray) const override;
     Vect normal (const Vect &pos) const;
     Collision collision (const Ray &ray) const override;
 

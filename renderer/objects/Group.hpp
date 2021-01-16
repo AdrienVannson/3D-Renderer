@@ -21,6 +21,7 @@ public:
     Group* withoutInternGroups ();
     void addObjectWithoutInternGroups (Object *object);
 
+    double collisionDate (const Ray &ray) const override;
     Collision collision (const Ray &ray) const override;
 
     virtual Box boundingBox() const override;

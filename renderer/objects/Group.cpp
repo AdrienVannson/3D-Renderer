@@ -29,6 +29,18 @@ void Group::addObjectWithoutInternGroups (Object *object)
     }
 }
 
+double Group::collisionDate (const Ray &ray) const
+{
+    double minDate = INFINITY;
+
+    // Select nearest object
+    for (Object *currentObject : m_objects) {
+        minDate = min(currentObject->collisionDate(ray), minDate);
+    }
+
+    return minDate;
+}
+
 Object::Collision Group::collision (const Ray &ray) const
 {
     Collision minCol;
