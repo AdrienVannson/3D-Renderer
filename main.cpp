@@ -10,15 +10,15 @@
 #include "image_utility.hpp"
 
 // (1) Update to change the scene
-#include "scenes/teapot.hpp"
+#include "scenes/waves.hpp"
 
 
 int main (int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-#if 0
-    render();
+#if 1
+    renderWaves();
 #else
     Stats::init();
     const clock_t startTime = clock();

@@ -37,7 +37,8 @@ SOURCES += \
     scenes/spheres.cpp \
     scenes/spheres_collisions.cpp \
     scenes/teapot.cpp \
-    scenes/torus_knot.cpp
+    scenes/torus_knot.cpp \
+    scenes/waves.cpp
 
 HEADERS += \
     image_utility.hpp \
@@ -70,7 +71,8 @@ HEADERS += \
     scenes/spheres.hpp \
     scenes/spheres_collisions.hpp \
     scenes/teapot.hpp \
-    scenes/torus_knot.hpp
+    scenes/torus_knot.hpp \
+    scenes/waves.hpp
 
 FORMS +=
 
