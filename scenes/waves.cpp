@@ -2,6 +2,7 @@
 #include "image_utility.hpp"
 #include "renderer/Scene.hpp"
 #include "renderer/objects/Triangle.hpp"
+#include "renderer/acceleration-structures/Octree.hpp"
 
 #include <iostream>
 #include <array>
@@ -9,27 +10,44 @@
 using namespace std;
 
 // Maillage du sol
-const double COEF_VITESSE = 1;
-
 const int N = 20;
-array<array<double,N>,N> hauteurs;
+array<array<double,N>,N> h;
+array<array<double,N>,N> h2; // h2 = dh/dt
 
-void nextFrame()
+const double C = 300; // Pour la relation de dispertion
+
+double t = 0;
+
+void nextFrameWaves(const double tau)
 {
-    array<array<double,N>,N> ancien = hauteurs;
+    t += tau;
 
+    array<array<double,N>,N> prevH = h;
+
+    // Update h
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            if (i == 0 || i == N-1 || j == 0 || j == N-1) {
-                hauteurs[i][j] = 0;
-            }
-            else if (i == 10 && j == 10) {
-                hauteurs[i][j] = min(hauteurs[i][j] + 0.05, 0.2);
+            if (i == 10 && j == 10) {
+                h[i][j] = 0.3 * sin(2*M_PI*t);
             }
             else {
-                const double somme = hauteurs[i][j+1] + hauteurs[i][j-1]
-                                   + hauteurs[i+1][j] + hauteurs[i-1][j];
-                hauteurs[i][j] = COEF_VITESSE*somme/4 + (1-COEF_VITESSE)*ancien[i][j];
+                h[i][j] += tau * h2[i][j];
+            }
+        }
+    }
+
+    // Update h2
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            if (i <= 1 || i >= N-2 || j <= 1 || j >= N-2) {
+                h2[i][j] = 0;
+            }
+            else {
+                // Second derivatives
+                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) / 2;
+                const double d2_y = (prevH[i][j-1] + prevH[i][j+1] - 2*prevH[i][j]) / 2;
+
+                h2[i][j] = tau * C*C * (d2_x + d2_y);
             }
         }
     }
@@ -40,6 +58,7 @@ Image* generateImage()
     Scene *scene = new Scene;
     scene->initRender();
     scene->setBackgroundColor(Color(50, 50, 50));
+    scene->setAccelerationStructure(new Octree);
 
     scene->addLight(new Light(Vect(-2, -4, 10), 1));
 
@@ -58,9 +77,9 @@ Image* generateImage()
             const double d = 1. / (N - 1.);
 
             Triangle *t = new Triangle(
-                Vect(x, y, hauteurs[i][j]),
-                Vect(x+d, y, hauteurs[i+1][j]),
-                Vect(x, y+d, hauteurs[i][j+1]),
+                Vect(x, y, h[i][j]),
+                Vect(x+d, y, h[i+1][j]),
+                Vect(x, y+d, h[i][j+1]),
                 Material(Color(0, 0, 180))
             );
 
@@ -74,13 +93,22 @@ Image* generateImage()
 void renderWaves()
 {
     // Simulation
-    for (int i=0; i<60*60; i++) { // 60s, 60fps
+    const int fps = 60;
+    const int duration = 1; // in seconds
+
+    // Avancer d'une seconde
+    for (int i=0; i<10*fps; i++) {
+        nextFrameWaves(1. / (10 * fps));
+    }
+
+    for (int i=0; i<duration*fps; i++) {
         const int process = 0; // Update to render different parts of the animation
 
         if ( (process == 0 && i < 15*60)
           || (process == 1 && i >= 15*60 && i < 30*60)
           || (process == 2 && i >= 30*60 && i < 45*60)
           || (process == 3 && i >= 45*60) ) {
+
             Image *image = generateImage();
 
             std::string filename = std::to_string(i);
@@ -88,12 +116,12 @@ void renderWaves()
                      + std::string(4 - filename.length(), '0') + filename + ".png";
 
             saveImage(*image, filename);
-            //showImage(*image);
-
             delete image;
         }
 
-        nextFrame(); // 60 fps
+        for (int i=0; i<10; i++) {
+            nextFrameWaves(1. / (10 * fps));
+        }
     }
 
     exit(0);
