@@ -14,13 +14,13 @@ const int N = 20;
 array<array<double,N>,N> h;
 array<array<double,N>,N> h2; // h2 = dh/dt
 
-const double C = 300; // Pour la relation de dispertion
+const double C = 300; // Pour la relation de dispersion
 
 double t = 0;
 
-void nextFrameWaves(const double tau)
+void nextFrameWaves(const double delta_t)
 {
-    t += tau;
+    t += delta_t;
 
     array<array<double,N>,N> prevH = h;
 
@@ -31,7 +31,7 @@ void nextFrameWaves(const double tau)
                 h[i][j] = 0.3 * sin(2*M_PI*t);
             }
             else {
-                h[i][j] += tau * h2[i][j];
+                h[i][j] += delta_t * h2[i][j];
             }
         }
     }
@@ -44,10 +44,10 @@ void nextFrameWaves(const double tau)
             }
             else {
                 // Second derivatives
-                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) / 2;
-                const double d2_y = (prevH[i][j-1] + prevH[i][j+1] - 2*prevH[i][j]) / 2;
+                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) * (N-1) / 2.;
+                const double d2_y = (prevH[i][j-1] + prevH[i][j+1] - 2*prevH[i][j]) * (N-1) / 2.;
 
-                h2[i][j] = tau * C*C * (d2_x + d2_y);
+                h2[i][j] = delta_t * C*C * (d2_x + d2_y);
             }
         }
     }
