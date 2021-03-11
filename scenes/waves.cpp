@@ -10,7 +10,7 @@
 using namespace std;
 
 // Maillage du sol
-const int N = 20;
+const int N = 40;
 array<array<double,N>,N> h;
 array<array<double,N>,N> h2; // h2 = dh/dt
 
@@ -27,8 +27,8 @@ void nextFrameWaves(const double delta_t)
     // Update h
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            if (i == 10 && j == 10) {
-                h[i][j] = 0.3 * sin(2*M_PI*t);
+            if (i == 10 && j >= 5 && j <= 35) {
+                h[i][j] = 0.5 * sin(2*M_PI*t);
             }
             else {
                 h[i][j] += delta_t * h2[i][j];
@@ -39,8 +39,25 @@ void nextFrameWaves(const double delta_t)
     // Update h2
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            if (i <= 1 || i >= N-2 || j <= 1 || j >= N-2) {
+            /*if (i == 0 || i == N-1 || j == 0 || j == N-1) {
                 h2[i][j] = 0;
+            }*/
+            if (i == 0 || i == N-1) {
+                h2[i][j] = 0;
+            }
+            else if (j == 0) {
+                // Second derivatives
+                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) * (N-1) / 2.;
+                const double d2_y = (prevH[i][j+1] - prevH[i][j]) * (N-1);
+
+                h2[i][j] = delta_t * C*C * (d2_x + d2_y);
+            }
+            else if (j == N-1) {
+                // Second derivatives
+                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) * (N-1) / 2.;
+                const double d2_y = (prevH[i][j-1] - prevH[i][j]) * (N-1);
+
+                h2[i][j] = delta_t * C*C * (d2_x + d2_y);
             }
             else {
                 // Second derivatives
