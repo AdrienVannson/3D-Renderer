@@ -108,21 +108,18 @@ void renderWaves()
 {
     // Simulation
     const int fps = 60;
-    const int duration = 1; // in seconds
+    const int duration = 12; // in seconds
 
-    // Avancer d'une seconde
-    for (int i=0; i<10*fps; i++) {
-        nextFrameWaves(1. / (10 * fps));
-    }
+    // Avancer de 3 secondes
+    /*for (int i=0; i<3*100*fps; i++) {
+        nextFrameWaves(1. / (100 * fps));
+    }*/
 
     for (int i=0; i<duration*fps; i++) {
-        const int process = 0; // Update to render different parts of the animation
+        const int process = 1; // Update to render different parts of the animation
+        const int processCount = 1;
 
-        if ( (process == 0 && i < 15*60)
-          || (process == 1 && i >= 15*60 && i < 30*60)
-          || (process == 2 && i >= 30*60 && i < 45*60)
-          || (process == 3 && i >= 45*60) ) {
-
+        if (i >= fps*duration*process/processCount && i < fps*duration*(process+1)/processCount) {
             Image *image = generateImage();
 
             std::string filename = std::to_string(i);
@@ -133,8 +130,8 @@ void renderWaves()
             delete image;
         }
 
-        for (int i=0; i<10; i++) {
-            nextFrameWaves(1. / (10 * fps));
+        for (int i=0; i<100; i++) {
+            nextFrameWaves(1. / (100 * fps));
         }
     }
 
