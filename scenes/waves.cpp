@@ -116,15 +116,14 @@ void renderWaves()
     }*/
 
     for (int i=0; i<duration*fps; i++) {
-        const int process = 1; // Update to render different parts of the animation
+        const int process = 0; // Update to render different parts of the animation
         const int processCount = 1;
 
         if (i >= fps*duration*process/processCount && i < fps*duration*(process+1)/processCount) {
             Image *image = generateImage();
 
             std::string filename = std::to_string(i);
-            filename = "output" + std::to_string(process) + "/"
-                     + std::string(4 - filename.length(), '0') + filename + ".png";
+            filename = "output/" + std::string(4 - filename.length(), '0') + filename + ".png";
 
             saveImage(*image, filename);
             delete image;
