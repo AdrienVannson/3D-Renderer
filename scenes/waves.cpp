@@ -9,12 +9,20 @@
 
 using namespace std;
 
+const double lambda = .25; // Longueur d'onde
+const double f = 1; // Fréquence de l'onde
+
+const double a = lambda; // Largeur de la fente
+const double d = .2; // Abscisse de l'obstacle
+
+const double c = lambda*f; // Célérité de l'onde
+
+const double H0 = .07; // Amplitude à l'origine
+
 // Maillage du sol
 const int N = 40;
 array<array<double,N>,N> h;
 array<array<double,N>,N> h2; // h2 = dh/dt
-
-const double C = 0.3; // Pour la relation de dispersion
 
 double t = 0;
 
@@ -27,8 +35,11 @@ void nextFrameWaves(const double delta_t)
     // Update h
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            if (i == 10 && j >= 5 && j <= 35) {
-                h[i][j] = 0.05 * sin(2*M_PI*t);
+            if (i == 0) { // Génération
+                h[i][j] = H0 * sin(2*M_PI * f * t);
+            }
+            else if (i == (int)N*d && abs(j - N/2) >= (int)N*a/2.) { // Obstacle
+                h[i][j] = 0;
             }
             else {
                 h[i][j] += delta_t * h2[i][j];
@@ -39,30 +50,13 @@ void nextFrameWaves(const double delta_t)
     // Update h2
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            if (i == 0 || i == N-1) {
-                h2[i][j] = 0;
-            }
-            else if (j == 0) {
-                // Dérivées secondes
-                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) * (N-1) * (N-1);
-                const double d2_y = (prevH[i][j+1] - prevH[i][j]) * (N-1) * (N-1);
+            // Dérivées secondes
+            const double d2_x = (prevH[max(i-1,0)][j] + prevH[min(i+1,N-1)][j] - 2*prevH[i][j])
+                              * (N-1) * (N-1);
+            const double d2_y = (prevH[i][max(j-1,0)] + prevH[i][min(j+1,N-1)] - 2*prevH[i][j])
+                              * (N-1) * (N-1);
 
-                h2[i][j] += delta_t * C*C * (d2_x + d2_y);
-            }
-            else if (j == N-1) {
-                // Dérivées secondes
-                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) * (N-1) * (N-1);
-                const double d2_y = (prevH[i][j-1] - prevH[i][j]) * (N-1) * (N-1);
-
-                h2[i][j] += delta_t * C*C * (d2_x + d2_y);
-            }
-            else {
-                // Dérivées secondes
-                const double d2_x = (prevH[i-1][j] + prevH[i+1][j] - 2*prevH[i][j]) * (N-1) * (N-1);
-                const double d2_y = (prevH[i][j-1] + prevH[i][j+1] - 2*prevH[i][j]) * (N-1) * (N-1);
-
-                h2[i][j] += delta_t * C*C * (d2_x + d2_y);
-            }
+            h2[i][j] += delta_t * c*c * (d2_x + d2_y);
         }
     }
 }
@@ -108,7 +102,7 @@ void renderWaves()
 {
     // Simulation
     const int fps = 60;
-    const int duration = 12; // in seconds
+    const int duration = 4; // in seconds
 
     // Avancer de 3 secondes
     /*for (int i=0; i<3*100*fps; i++) {
@@ -116,8 +110,8 @@ void renderWaves()
     }*/
 
     for (int i=0; i<duration*fps; i++) {
-        const int process = 0; // Update to render different parts of the animation
-        const int processCount = 1;
+        const int process = 3; // Update to render different parts of the animation
+        const int processCount = 4;
 
         if (i >= fps*duration*process/processCount && i < fps*duration*(process+1)/processCount) {
             Image *image = generateImage();
@@ -126,6 +120,7 @@ void renderWaves()
             filename = "output/" + std::string(4 - filename.length(), '0') + filename + ".png";
 
             saveImage(*image, filename);
+
             delete image;
         }
 
