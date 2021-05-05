@@ -7,12 +7,8 @@ It can simulate color, luminosity, shadows and even mirrors!
 It can open and render any .obj file, provided that the objects are triangulated beforehand.
 
 ## Examples
-
 These pictures have been rendered using 3D-Renderer:
-
-![Spheres](outputs/spheres.png)
-![Sphere with mirror effect](outputs/sphere_mirror.png)
-![Teapot](outputs/teapot.png)
-![Monkeys](outputs/monkeys.png)
-![Torus knot](outputs/torus_knot.png)
-![AdrienVannson's profile picture!](outputs/profile_picture.png)
+![Spheres](https://www.adrienvannson.fr/AdrienVannson/resources/3D-Renderer-spheres.png)
+![Teapot](https://www.adrienvannson.fr/AdrienVannson/resources/3D-Renderer-teapot.png)
+![Monkeys](https://www.adrienvannson.fr/AdrienVannson/resources/3D-Renderer-monkeys.png)
+![Torus knot](https://www.adrienvannson.fr/AdrienVannson/resources/3D-Renderer-torus-knot.png)
