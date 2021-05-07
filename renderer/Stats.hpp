@@ -1,10 +1,14 @@
 #ifndef STATS_HPP
 #define STATS_HPP
 
+#include <iomanip>
+#include <ostream>
+
 class Stats
 {
 public:
     static void init ();
+    static void endTimer ();
 
     // Triangle
     static inline void addRayTriangleTest () {
@@ -36,11 +40,15 @@ public:
         return m_rayBoxIntersectionsCount;
     }
 
+    static void print (std::ostream&);
+
 private:
     static long long m_rayTriangleIntersectionsCount;
     static long long m_rayTriangleTestsCount;
     static long long m_rayBoxIntersectionsCount;
     static long long m_rayBoxTestsCount;
+
+    static clock_t m_startTime, m_endTime;
 };
 
 #endif // STATS_HPP
