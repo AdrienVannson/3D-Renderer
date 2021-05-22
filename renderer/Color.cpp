@@ -1,12 +1,23 @@
 #include "Color.hpp"
 
 #include <algorithm>
-using namespace std;
+
+Color::Color () :
+    m_red(0),
+    m_green(0),
+    m_blue(0)
+{}
 
 Color::Color (const int red, const int green, const int blue) :
-    m_red (red),
-    m_green (green),
-    m_blue (blue)
+    m_red(red),
+    m_green(green),
+    m_blue(blue)
+{}
+
+Color::Color (const int hex) :
+    m_red(hex / (256*256)),
+    m_green((hex / 256) % 256),
+    m_blue(hex % 256)
 {}
 
 int Color::hex () const
@@ -16,9 +27,9 @@ int Color::hex () const
 
 void Color::operator+= (const Color &other)
 {
-    m_red = min(m_red + other.m_red, 255);
-    m_green = min(m_green + other.m_green, 255);
-    m_blue = min(m_blue + other.m_blue, 255);
+    m_red = std::min(m_red + other.m_red, 255);
+    m_green = std::min(m_green + other.m_green, 255);
+    m_blue = std::min(m_blue + other.m_blue, 255);
 }
 
 void Color::operator*= (const double x)

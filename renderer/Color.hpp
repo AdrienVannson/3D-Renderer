@@ -1,12 +1,12 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
-
 class Color
 {
 public:
-
-    Color (const int red=0, const int green=0, const int blue=0);
+    Color ();
+    Color (const int red, const int green, const int blue);
+    Color (const int hex);
 
     inline int red () const { return m_red; }
     inline void setRed (const int red) { m_red = red; }
