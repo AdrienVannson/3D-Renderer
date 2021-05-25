@@ -9,6 +9,7 @@ HEADERS += \
     $$PWD/renderer/Material.hpp \
     $$PWD/renderer/Object.hpp \
     $$PWD/renderer/Ray.hpp \
+    $$PWD/renderer/Renderer.hpp \
     $$PWD/renderer/Scene.hpp \
     $$PWD/renderer/Stats.hpp \
     $$PWD/renderer/Vect.hpp \
@@ -32,6 +33,7 @@ SOURCES += \
     $$PWD/renderer/Material.cpp \
     $$PWD/renderer/Object.cpp \
     $$PWD/renderer/Ray.cpp \
+    $$PWD/renderer/Renderer.cpp \
     $$PWD/renderer/Scene.cpp \
     $$PWD/renderer/Stats.cpp \
     $$PWD/renderer/Vect.cpp \

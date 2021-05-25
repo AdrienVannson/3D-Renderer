@@ -10,7 +10,7 @@ Scene::Scene () :
     m_accelerationStructure (new SlowIntersection),
     m_backgroundColor (Color(80, 80, 80))
 {
-    m_camera = new Camera(this);
+    m_camera = new Camera();
     m_root = new Group();
 }
 
@@ -96,7 +96,7 @@ void Scene::load (QString filename, const std::vector<Material> &materials)
  * Rendering
  */
 
-void Scene::initRender ()
+void Scene::init()
 {
     m_accelerationStructure->init(m_root);
 }
@@ -107,6 +107,7 @@ double Scene::collisionDate (const Ray &ray) const
     return object == 0 ? INFINITY : object->collisionDate(ray);
 }
 
+[[deprecated]]
 Color Scene::color (const Ray &ray, const int remainingDepth) const
 {
     if (remainingDepth == 0) {

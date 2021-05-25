@@ -4,6 +4,7 @@
 #include "Vect.hpp"
 #include "Color.hpp"
 #include "Image.hpp"
+#include "Renderer.hpp"
 
 class Scene;
 
@@ -11,7 +12,7 @@ class Scene;
 class Camera
 {
 public:
-    Camera (Scene *scene, const int width=640, const int height=360);
+    Camera (const int width=640, const int height=360);
 
     inline int width () const { return m_width; }
     inline void setWidth (const int width) { m_width = width; }
@@ -25,13 +26,9 @@ public:
     inline Vect dir () const { return m_dir; }
     inline void setDir (const Vect dir) { m_dir = dir; }
 
-    Image* image () const;
+    Image* image (Renderer *renderer) const;
 
 private:
-    Color color (const int x, const int y, const int remainingDepth) const;
-
-    Scene *m_scene;
-
     Vect m_pos; // Position of the focus point
     Vect m_dir;
 

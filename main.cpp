@@ -10,14 +10,14 @@
 #include "image_utility.hpp"
 
 // (1) Update to change the scene
-#include "scenes/waves.hpp"
+#include "scenes/teapot.hpp"
 
 
 int main (int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-#if 1
+#if 0
     renderWaves();
 #else
     Stats::init();

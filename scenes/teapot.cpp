@@ -1,6 +1,7 @@
 #include "teapot.hpp"
 
 #include "renderer/acceleration-structures/Octree.hpp"
+#include "renderer/Renderer.hpp"
 
 Image* generateImageTeapot ()
 {
@@ -14,7 +15,13 @@ Image* generateImageTeapot ()
     scene->camera()->setPos( Vect (12, 12, 7.4) );
     scene->camera()->setDir( Vect (-3, -3, -1.5) );
 
-    Image *image = scene->camera()->image();
+    scene->init();
+
+    Renderer *renderer = new Renderer(scene);
+    Image *image = scene->camera()->image(renderer);
+
     delete scene;
+    delete renderer;
+
     return image;
 }

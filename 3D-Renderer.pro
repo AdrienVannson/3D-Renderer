@@ -17,6 +17,7 @@ SOURCES += \
     renderer/Material.cpp \
     renderer/Object.cpp \
     renderer/Ray.cpp \
+    renderer/Renderer.cpp \
     renderer/Scene.cpp \
     renderer/Stats.cpp \
     renderer/Vect.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     renderer/Material.hpp \
     renderer/Object.hpp \
     renderer/Ray.hpp \
+    renderer/Renderer.hpp \
     renderer/Scene.hpp \
     renderer/Stats.hpp \
     renderer/Vect.hpp \
